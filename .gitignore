@@ -13,3 +13,6 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+# Top secret codes
+/config/initializers/top_secret_codes.rb
