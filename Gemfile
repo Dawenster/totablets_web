@@ -7,6 +7,7 @@ gem 'rails', '3.2.13'
 
 gem 'pg'
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
+gem 'heroku'
 gem 'heroku-api'
 gem 'resque'
 
