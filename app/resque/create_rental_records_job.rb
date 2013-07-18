@@ -1,5 +1,5 @@
 class CreateRentalRecordsJob
-	include HerokuAutoScaler::AutoScaling
+	extend HerokuAutoScaler
 
   @queue = :create_rental_records
 
