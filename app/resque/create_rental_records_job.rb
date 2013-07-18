@@ -3,19 +3,21 @@ class CreateRentalRecordsJob
 
   @queue = :create_rental_records
 
+  def self.queue
+  	:create_rental_records
+  end
+
   def self.perform(args, stripe_customer_id)
     totablets_customer = Customer.find_by_email(args["email"])
 
     unless totablets_customer
-    	puts args["name"]
-    	puts args["email"]
-    	args["stripe_token"]
 			totablets_customer = Customer.create(
 				:name => args["name"],
 				:email => args["email"],
 				:stripe_token => args["stripe_token"],
 				:stripe_customer_id => stripe_customer_id
 			)
+			puts "Created customer: #{totablets_customer.name} - #{totablets_customer.email}"
 		end
 
 		location = Location.find_by_name(args["location"].split(", ").first)
@@ -37,8 +39,6 @@ class CreateRentalRecordsJob
       :customer => totablets_customer,
       :location => location
 		)
-
-		puts "Count: #{args["tax_names"].split(" and ").count}"
 
 		args["tax_names"].split(" and ").each do |tax_name|
 			tax = Tax.find_by_name(tax_name)
