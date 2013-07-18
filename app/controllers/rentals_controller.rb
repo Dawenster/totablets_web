@@ -33,9 +33,6 @@ class RentalsController < ApplicationController
 			stripe_customer_id = stripe_customer.id
 		end
 
-		puts "*" * 100
-		puts params
-
 		Resque.enqueue(CreateRentalRecordsJob, params, stripe_customer_id)
 
 		render :json => { :stripe_customer => stripe_customer_id }
