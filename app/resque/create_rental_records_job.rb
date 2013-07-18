@@ -1,7 +1,4 @@
-require 'resque/plugins/resque_heroku_autoscaler'
-
 class CreateRentalRecordsJob
-	extend Resque::Plugins::HerokuAutoscaler
   
   @queue = :create_rental_records
 
