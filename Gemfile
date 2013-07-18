@@ -8,7 +8,8 @@ gem 'rails', '3.2.13'
 gem 'pg'
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 gem 'resque'
-gem 'resque-heroku-autoscaler', git: 'https://github.com/ajmurmann/resque-heroku-autoscaler.git'
+# gem 'resque-heroku-autoscaler', git: 'https://github.com/ajmurmann/resque-heroku-autoscaler.git'
+gem 'hirefire'
 
 # Gems used only for assets and not required
 # in production environments by default.
