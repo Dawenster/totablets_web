@@ -8,6 +8,8 @@ class CreateRentalRecordsJob
   end
 
   def self.perform(args, stripe_customer_id)
+  	after_enqueue_scale_up
+
     totablets_customer = Customer.find_by_email(args["email"])
 
     unless totablets_customer
@@ -44,5 +46,7 @@ class CreateRentalRecordsJob
 			tax = Tax.find_by_name(tax_name)
 			tax.rentals << rental
 		end
+
+		after_perform_scale_down
   end
 end
