@@ -1,5 +1,5 @@
 class CreateRentalRecordsJob
-	extend HerokuAutoScaler
+	extend HerokuAutoScaler::AutoScaling
 
   @queue = :create_rental_records
 
@@ -8,8 +8,6 @@ class CreateRentalRecordsJob
   end
 
   def self.perform(args, stripe_customer_id)
-  	after_enqueue_scale_up
-
     totablets_customer = Customer.find_by_email(args["email"])
 
     unless totablets_customer
@@ -47,6 +45,6 @@ class CreateRentalRecordsJob
 			tax.rentals << rental
 		end
 
-		after_perform_scale_down
+		self.after_perform_scale_down
   end
 end
