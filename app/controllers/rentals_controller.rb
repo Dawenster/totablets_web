@@ -1,4 +1,6 @@
 class RentalsController < ApplicationController
+	# extend HerokuAutoScaler::AutoScaling
+	
 	def create
 		Stripe.api_key = ENV['STRIPE_SECRET_KEY']
 
@@ -34,6 +36,7 @@ class RentalsController < ApplicationController
 		end
 
 		Resque.enqueue(CreateRentalRecordsJob, params, stripe_customer_id)
+		# self.after_enqueue_scale_up
 
 		render :json => { :stripe_customer => stripe_customer_id }
 	end
