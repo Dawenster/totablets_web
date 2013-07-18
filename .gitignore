@@ -15,7 +15,7 @@
 /tmp
 
 # Top secret codes
-/config/initializers/top_secret_codes.rb
+/config/initializers/aaa_top_secret_codes.rb
 
 # HTTPS Certs
 /certs
