@@ -5,21 +5,39 @@ class RentalsController < ApplicationController
 		# Get the credit card details submitted by the form
 		token = params[:stripe_token]
 
-		# Create a Stripe customer
-		stripe_customer = Stripe::Customer.create(
-		  :card => token,
-		  :description => params[:email]
-		)
+		totablets_customer = Customer.find_by_email(params[:email])
 
-		# Charge the customer instead of the card
-		Stripe::Charge.create(
-	    :amount => params[:grand_total], # in cents
-	    :currency => params[:currency].downcase,
-	    :customer => stripe_customer.id
-		)
+		if totablets_customer
+			# Charge the repeat customer instead of the card
+			Stripe::Charge.create(
+		    :amount => params[:grand_total], # in cents
+		    :currency => params[:currency].downcase,
+		    :customer => totablets_customer.stripe_customer_id
+			)
 
-		# Resque.enqueue(CreateRentalRecordsJob, params, stripe_customer.id)
+			stripe_customer_id = totablets_customer.stripe_customer_id
+		else
+			# Create a Stripe customer
+			stripe_customer = Stripe::Customer.create(
+			  :card => token,
+			  :description => params[:email]
+			)
 
-		render :json => { :stripe_customer => stripe_customer.id }
+			# Charge the new customer instead of the card
+			Stripe::Charge.create(
+		    :amount => params[:grand_total], # in cents
+		    :currency => params[:currency].downcase,
+		    :customer => stripe_customer.id
+			)
+
+			stripe_customer_id = stripe_customer.id
+		end
+
+		puts "*" * 100
+		puts params
+
+		Resque.enqueue(CreateRentalRecordsJob, params, stripe_customer_id)
+
+		render :json => { :stripe_customer => stripe_customer_id }
 	end
 end

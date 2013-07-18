@@ -4,7 +4,7 @@ Tax.create(:name => "PST", :rate => 7)
 
 Location.create(
 	:name => "Nuvo Hotel",
-	:type => "Hotel",
+	:location_type => "Hotel",
 	:city => "Calgary",
 	:province_or_state => "Alberta",
 	:country => "Canada"
@@ -12,7 +12,7 @@ Location.create(
 
 Location.create(
 	:name => "Shangri-La",
-	:type => "Hotel",
+	:location_type => "Hotel",
 	:city => "Vancouver",
 	:province_or_state => "British Columbia",
 	:country => "Canada"
