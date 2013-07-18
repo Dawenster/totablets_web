@@ -1,6 +1,6 @@
 class CreateRentalRecordsJob
-	extend HerokuAutoScaler::AutoScaling
-	  
+	include HerokuAutoScaler::AutoScaling
+
   @queue = :create_rental_records
 
   def self.perform(args, stripe_customer_id)
