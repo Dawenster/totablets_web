@@ -23,10 +23,14 @@ require 'heroku'
 module HerokuAutoScaler
   module AutoScaling
     def after_perform_scale_down(*args)
+      puts "*" * 100
+      puts "I'm totally scaling down!"
       HerokuAutoScaler.scale_down!
     end
 
     def after_enqueue_scale_up(*args)
+      puts "*" * 100
+      puts "I'm totally scaling up!"
       HerokuAutoScaler.scale_up!
     end
 
@@ -70,6 +74,8 @@ module HerokuAutoScaler
   def heroku
     if ENV['HEROKU_USER'] && ENV['HEROKU_PASSWORD'] && ENV['HEROKU_APP']
       @heroku ||= Heroku::Client.new(ENV['HEROKU_USER'], ENV['HEROKU_PASSWORD'])
+      puts "%" * 100
+      puts "Logged in! :)"
     else
       false
     end
