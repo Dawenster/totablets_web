@@ -72,8 +72,8 @@ module HerokuAutoScaler
   attr_accessor :scaling_block
 
   def heroku
-    if ENV['HEROKU_USER'] && ENV['HEROKU_PASSWORD'] && ENV['HEROKU_APP']
-      @heroku ||= Heroku::Client.new(ENV['HEROKU_USER'], ENV['HEROKU_PASSWORD'])
+    if ENV['HEROKU_API'] && ENV['HEROKU_APP']
+      @heroku ||= Heroku::API.new(:api_key => ENV['HEROKU_API'])
       puts "%" * 100
       puts "Logged in! :)"
     else
@@ -82,7 +82,7 @@ module HerokuAutoScaler
   end
 
   def heroku_workers=(qty)
-    heroku.set_workers(ENV['HEROKU_APP'], qty) if heroku
+    heroku.post_ps_scale(ENV['HEROKU_APP'], 'create_rental_records_worker', qty) if heroku
   end
 
   def job_count
