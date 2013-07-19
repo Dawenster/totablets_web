@@ -58,13 +58,13 @@ module HerokuAutoScaler
 
   def scale_down!
     Rails.logger.info "Scale down j:#{job_count} w:#{resque_workers}"
-    self.heroku_workers = 0 if job_count == 0 && resque_workers == 1
+    self.heroku_workers(0) if job_count == 0 && resque_workers == 1
   end
 
   def scale_up!
     return if ignore_scaling
     pending = job_count
-    self.heroku_workers = workers_for(pending) if pending > 0
+    self.heroku_workers(workers_for(pending)) if pending > 0
   end
 
   private
