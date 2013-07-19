@@ -4,5 +4,5 @@ class Rental < ActiveRecord::Base
 
 	belongs_to :customer
 	belongs_to :location
-	has_and_belongs_to_many :taxes
+	has_and_belongs_to_many :taxes, :class_name => 'Tax'
 end
