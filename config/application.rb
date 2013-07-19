@@ -59,7 +59,7 @@ module Totablets
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
-    # Force SSL
-    config.force_ssl = true
+    # Do not force SSL in development
+    config.force_ssl = false
   end
 end
