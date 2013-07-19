@@ -13,3 +13,9 @@
 # ActiveSupport::Inflector.inflections do |inflect|
 #   inflect.acronym 'RESTful'
 # end
+
+# Taxes to tax
+ActiveSupport::Inflector.inflections do |inflect|
+  inflect.irregular 'tax', 'taxes'
+  inflect.singular 'taxes', 'tax'
+end
