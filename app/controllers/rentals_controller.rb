@@ -13,20 +13,22 @@ class RentalsController < ApplicationController
 			Stripe::Charge.create(
 		    :amount => params[:grand_total], # in cents
 		    :currency => params[:currency].downcase,
-		    :customer => totablets_customer.stripe_customer_id
+		    :customer => totablets_customer.stripe_customer_id,
+		    :description => "#{params[:location]} iPad rental: #{params[:days]} days at $#{params[:rate].to_i / 100}/day (plus #{params[:tax_names]})"
 			)
 		else
 			# Create a Stripe customer
 			stripe_customer = Stripe::Customer.create(
 			  :card => token,
-			  :description => params[:email]
+			  :email => params[:email]
 			)
 
 			# Charge the new customer instead of the card
 			Stripe::Charge.create(
 		    :amount => params[:grand_total], # in cents
 		    :currency => params[:currency].downcase,
-		    :customer => stripe_customer.id
+		    :customer => stripe_customer.id,
+		    :description => "#{params[:location]} iPad rental: #{params[:days]} at #{params[:rate]}/day (plus #{params[:tax_names]})"
 			)
 
 			# Create local record
