@@ -10,6 +10,7 @@ gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 gem 'heroku-api'
 gem 'resque'
 gem 'thin'
+gem 'bootstrap-sass'
 
 # Gems used only for assets and not required
 # in production environments by default.
