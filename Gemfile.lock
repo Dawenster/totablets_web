@@ -53,6 +53,8 @@ GEM
     excon (0.25.3)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    haml (4.0.3)
+      tilt
     heroku-api (0.3.14)
       excon (~> 0.25.1)
     hike (1.2.3)
@@ -144,6 +146,7 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass
   coffee-rails (~> 3.2.1)
+  haml
   heroku-api
   jquery-rails
   pg

@@ -11,6 +11,7 @@ gem 'heroku-api'
 gem 'resque'
 gem 'thin'
 gem 'bootstrap-sass'
+gem 'haml'
 
 # Gems used only for assets and not required
 # in production environments by default.
