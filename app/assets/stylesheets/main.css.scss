@@ -1,0 +1,18 @@
+body, html {
+	height: 100%;
+}
+
+.navbar-inner {
+	width: 800px;
+	margin: 0 auto;
+	-webkit-border-bottom-left-radius: 10px !important;
+     -moz-border-bottom-left-radius: 10px !important;
+          border-bottom-left-radius: 10px !important;
+  -webkit-border-bottom-right-radius: 10px !important;
+     -moz-border-bottom-right-radius: 10px !important;
+          border-bottom-right-radius: 10px !important;
+}
+
+.brand {
+	padding-left: 30px !important;
+}

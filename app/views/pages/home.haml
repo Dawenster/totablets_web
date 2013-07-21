@@ -1,13 +1,53 @@
-#myCarousel.carousel.slide
-  %ol.carousel-indicators
-    %li.active{"data-slide-to" => "0", "data-target" => "#myCarousel"}
-    %li{"data-slide-to" => "1", "data-target" => "#myCarousel"}
-    %li{"data-slide-to" => "2", "data-target" => "#myCarousel"}
-  / Carousel items
-  .carousel-inner
-    .active.item …
-    .item …
-    .item …
-  / Carousel nav
-  %a.carousel-control.left{"data-slide" => "prev", :href => "#myCarousel"}
-  %a.carousel-control.right{"data-slide" => "next", :href => "#myCarousel"}
+.main-container{ "data-spy" => "scroll", "data-target" => ".navbar" }
+  .section-container
+    .section-top-filler#what
+    %h1 We help you rent out iPads
+
+    .carousel-container
+      #myCarousel.carousel.slide
+        %ol.carousel-indicators
+          %li.active{"data-slide-to" => "0", "data-target" => "#myCarousel"}
+          %li{"data-slide-to" => "1", "data-target" => "#myCarousel"}
+          %li{"data-slide-to" => "2", "data-target" => "#myCarousel"}
+          %li{"data-slide-to" => "3", "data-target" => "#myCarousel"}
+          %li{"data-slide-to" => "4", "data-target" => "#myCarousel"}
+          %li{"data-slide-to" => "5", "data-target" => "#myCarousel"}
+        / Carousel items
+        .carousel-inner
+          .active.item
+            = image_tag("map_landscape.jpg")
+          .item
+            = image_tag("facebook_landscape.jpg")
+          .item
+            = image_tag("netflix_landscape.jpg")
+          .item
+            = image_tag("game_landscape.jpg")
+          .item
+            = image_tag("skype_landscape.jpg")
+          .item
+            = image_tag("vancouver_landscape.jpg")
+        / Carousel nav
+        %a.carousel-control.left{"data-slide" => "prev", :href => "#myCarousel"} ‹
+        %a.carousel-control.right{"data-slide" => "next", :href => "#myCarousel"} ›
+
+  .section-container
+    .section-top-filler#how
+    %h1 We maintain the app and the iPad
+
+    %h1 You put them in your location
+
+  .section-container
+    .section-top-filler#why
+    %h1 This is why...
+
+  .section-container
+    .section-top-filler#where
+    %h1 This is where...
+
+  .section-container
+    .section-top-filler#who
+    %h1 This is who...
+
+  .section-container
+    .section-top-filler#when
+    %h1 This is when...
