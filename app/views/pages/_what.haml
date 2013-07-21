@@ -1,0 +1,29 @@
+.section-top-filler#what
+%h1 We help you rent iPads to your guests
+
+.carousel-container
+  #myCarousel.carousel.slide
+    %ol.carousel-indicators
+      %li.active{"data-slide-to" => "0", "data-target" => "#myCarousel"}
+      %li{"data-slide-to" => "1", "data-target" => "#myCarousel"}
+      %li{"data-slide-to" => "2", "data-target" => "#myCarousel"}
+      %li{"data-slide-to" => "3", "data-target" => "#myCarousel"}
+      %li{"data-slide-to" => "4", "data-target" => "#myCarousel"}
+      %li{"data-slide-to" => "5", "data-target" => "#myCarousel"}
+    / Carousel items
+    .carousel-inner
+      .active.item
+        = image_tag("map_landscape.jpg")
+      .item
+        = image_tag("facebook_landscape.jpg")
+      .item
+        = image_tag("netflix_landscape.jpg")
+      .item
+        = image_tag("game_landscape.jpg")
+      .item
+        = image_tag("skype_landscape.jpg")
+      .item
+        = image_tag("vancouver_landscape.jpg")
+    / Carousel nav
+    %a.carousel-control.left{"data-slide" => "prev", :href => "#myCarousel"} ‹
+    %a.carousel-control.right{"data-slide" => "next", :href => "#myCarousel"} ›

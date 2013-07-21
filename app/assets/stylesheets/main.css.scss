@@ -16,3 +16,29 @@ body, html {
 .brand {
 	padding-left: 30px !important;
 }
+
+.main-container {
+	text-align: center;
+	height: 100%;
+}
+
+.section-container {
+	height: 100%;
+	min-height: 800px;
+}
+
+.section-top-filler {
+	height: 40px;
+}
+
+.row {
+	width: 800px;
+	margin: 0 auto !important;
+	padding: 20px 20px 0 0;
+}
+
+.hero-unit {
+	padding: 10px !important;
+	height: 300px;
+}
+
