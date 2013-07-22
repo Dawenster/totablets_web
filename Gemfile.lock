@@ -70,6 +70,7 @@ GEM
     mime-types (1.23)
     mono_logger (1.1.0)
     multi_json (1.7.7)
+    newrelic_rpm (3.6.0.83)
     pg (0.15.1)
     polyglot (0.3.3)
     rack (1.4.5)
@@ -149,6 +150,7 @@ DEPENDENCIES
   haml
   heroku-api
   jquery-rails
+  newrelic_rpm
   pg
   rails (= 3.2.13)
   resque
