@@ -6,7 +6,7 @@ class RentalsController < ApplicationController
 		# Get the credit card details submitted by the form
 		token = params[:stripe_token]
 		totablets_customer = Customer.find_by_email(params[:email])
-		
+
 		begin
 
 			if totablets_customer
@@ -82,9 +82,6 @@ class RentalsController < ApplicationController
 			)
 			puts "Created customer: #{totablets_customer.name} - #{totablets_customer.email}"
 		end
-
-		puts "%" * 100
-		puts "STILL NO PROBLEMO!"
 
 		render :json => { :stripe_error => "None" }
 	end

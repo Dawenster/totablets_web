@@ -1,2 +1,11 @@
 .section-top-filler#who
 %h1 Give us a shout
+
+.phone
+	= image_tag("phone_icon.png", :width => 200, :id => "phone_icon")
+	= image_tag("phone_icon_hover.png", :width => 200, :id => "phone_icon_hover", :class => "hide")
+
+.email
+	= image_tag("email_icon.png", :width => 200, :id => "email_icon")
+	= mail_to "totablets@outlook.com", image_tag("email_icon_hover.png", :width => 200), :encode => "hex", :id => "email_icon_hover", :class => "hide"
+	

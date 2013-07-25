@@ -1,0 +1,62 @@
+.case-study-panel {
+	width: 420px;
+	margin: 0 auto;
+	background-color: #D9D4C7;
+	overflow: none;
+	border-radius: 5px;
+	margin-bottom: 60px;
+}
+
+.clearfix:after { 
+   content: " ";
+   display: block; 
+   height: 0; 
+   clear: both;
+}
+
+.case-study-image {
+	float: left;
+	border-radius: 5px;
+}
+
+.case-study-description {
+	float: left;
+	text-align: left;
+	padding-left: 10px;
+}
+
+.success-metrics {
+
+}
+
+.metrics-box {
+	width: 250px;
+	height: 200px;
+	float: left;
+	margin: 0px 5px;
+	background-color: #F2EFE4;
+	border-radius: 10px;
+	position: relative;
+	padding-top: 60px;
+}
+
+.metrics-box:hover {
+	background-color: #D9D4C7;
+}
+
+.metrics-box:first-child {
+	margin-left: 25px;
+}
+
+.picture-holder {
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	top: -50px;
+	left: 75px;
+}
+
+.metrics-box p {
+	text-align: left;
+	padding: 10px 20px;
+}

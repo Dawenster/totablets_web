@@ -1,4 +1,43 @@
 .section-top-filler#why
-%h1 Your guests want to stay connected
+%h1 We have a proven track record
 
-%p For over a year we have been helping hotel guests stay connected, discover more, and relax during their travels.  
+.row
+	.case-study-panel.clearfix
+		.case-study-image
+			= image_tag("nuvo_hotel.jpg", :width => 200, :style => "border-top-left-radius: 5px;border-bottom-left-radius: 5px;")
+		.case-study-description
+			%h4
+				Case study:
+				%span
+					= link_to("Nuvo Hotel", "http://www.nuvohotelsuites.com/")
+			.location
+				Location: Downtown Calgary
+			.style
+				Style: Independent boutique
+			.rate
+				Room rate: ~$130-$150/night
+			.rooms
+				Rooms: 32
+			.renting
+				Renting: 3 iPads
+
+
+.row
+	.success-metrics
+		.metrics-box
+			.picture-holder
+				= image_tag("calendar_icon.png", :width => 100)
+			%h4 ~30 rental per month
+			%p At Nuvo Hotel, we have, on average, one iPad being rented out every day of the month.  It is fairly popular with business travelers as well as families looking to relax in the evenings.
+
+		.metrics-box
+			.picture-holder
+				= image_tag("credit_card_icon.png", :width => 100)
+			%h4 >$100 profit per iPad
+			%p With only 3 iPads, we help Nuvo Hotel pull in a respectable revenue of >$100 per iPad, per month.  All we ask is that they hand out / receive our iPads and let us know of any damages.
+
+		.metrics-box
+			.picture-holder
+				= image_tag("happy_icon.png", :width => 100)
+			%h4 Many happy guests
+			%p Nuvo Hotel tells us that many of their guests enjoy using the services and that the iPads provide an invaluable source of information - as well as entertainment - during their stay.
