@@ -1,11 +1,6 @@
 require 'resque/server'
 
 Totablets::Application.routes.draw do
-  constraints(:host => "totablets.com") do
-	  match "(*x)" => redirect { |params, request|
-	    URI.parse(request.url).tap { |x| x.host = "www.totablets.com" }.to_s
-	  }
-	end 
 
 	root to: 'pages#home'
 
