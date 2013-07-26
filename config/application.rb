@@ -61,5 +61,7 @@ module Totablets
 
     # Do not force SSL in development
     config.force_ssl = false
+
+    config.assets.initialize_on_precompile = false
   end
 end
