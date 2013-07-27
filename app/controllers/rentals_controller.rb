@@ -29,7 +29,7 @@ class RentalsController < ApplicationController
 			    :amount => params[:grand_total], # in cents
 			    :currency => params[:currency].downcase,
 			    :customer => stripe_customer.id,
-			    :description => "#{params[:location]} iPad rental: #{params[:days]} at #{params[:rate]}/day (plus #{params[:tax_names]})"
+			    :description => "#{params[:location]} iPad rental: #{params[:days]} days at $#{params[:rate].to_i / 100}/day (plus #{params[:tax_names]})"
 				)
 
 				stripe_customer_id = stripe_customer.id
