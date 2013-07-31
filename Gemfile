@@ -13,7 +13,7 @@ gem 'thin'
 gem 'bootstrap-sass'
 gem 'haml'
 gem 'newrelic_rpm'
-gem 'casperjs'
+gem 'mechanize'
 
 # Gems used only for assets and not required
 # in production environments by default.
