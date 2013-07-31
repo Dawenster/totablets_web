@@ -83,6 +83,8 @@ class RentalsController < ApplicationController
 			puts "Created customer: #{totablets_customer.name} - #{totablets_customer.email}"
 		end
 
+		Rental.unlock_app
+
 		render :json => { :stripe_error => "None" }
 	end
 
@@ -115,7 +117,6 @@ class RentalsController < ApplicationController
 				tax = Tax.find_by_name(tax_name)
 				tax.rentals << rental
 			end
-
 			render :json => { :rental => rental.id }
 		else
 			render :json => { :message => "No customer created yet." }
