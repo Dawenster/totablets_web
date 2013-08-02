@@ -3,4 +3,5 @@ class Location < ActiveRecord::Base
 
 	has_many :rentals
 	has_many :customers
+	has_many :devices
 end

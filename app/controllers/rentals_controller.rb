@@ -94,11 +94,11 @@ class RentalsController < ApplicationController
 
 		if totablets_customer
 			location = Location.find_by_name(params["location"].split(", ").first)
+			device = Device.find_by_name(params["device_name"])
 			start_date = DateTime.strptime(params["start_date"].gsub("  0000",""), "%Y-%m-%d %H:%M:%S")
 			end_date = DateTime.strptime(params["end_date"].gsub("  0000",""), "%Y-%m-%d %H:%M:%S")
 
 			rental = Rental.create(
-				:device_name => params["device_name"],
 	      :location_detail => params["location_detail"],
 	      :days => params["days"].to_i,
 	      :start_date => start_date,
@@ -110,7 +110,8 @@ class RentalsController < ApplicationController
 	      :grand_total => params["grand_total"].to_i,
 				:currency => params["currency"],
 	      :customer => totablets_customer,
-	      :location => location
+	      :location => location,
+				:device => device
 			)
 
 			params["tax_names"].split(" and ").each do |tax_name|

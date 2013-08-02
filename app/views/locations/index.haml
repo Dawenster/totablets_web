@@ -1,0 +1,39 @@
+.main-container
+	.admin-page
+		.row
+			.span2
+				= render "layouts/admin_nav"
+
+			.span8
+				%h3.admin-title All locations
+
+				.add-item
+					%a{ :href => new_location_path } + Add Location
+
+				%table.table.table-striped
+					%tr
+						%th Name
+						%th Type
+						%th City
+						%th Province
+						%th Country
+						%th Devices
+						%th Rentals
+
+					- @locations.each do |location|
+						%tr
+							%td
+								%a{ :href => location_path(location) }
+									= location.name
+							%td
+								= location.location_type
+							%td
+								= location.city
+							%td
+								= location.province_or_state
+							%td
+								= location.country
+							%td
+								= location.devices.count
+							%td
+								= location.rentals.count

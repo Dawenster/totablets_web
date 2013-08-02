@@ -17,3 +17,9 @@ Location.create(
 	:province_or_state => "British Columbia",
 	:country => "Canada"
 )
+
+Device.create(
+	:name => "iPad Alpha",
+	:profile_value => "584342051651322821",
+	:device_type => "iPad 2"
+)

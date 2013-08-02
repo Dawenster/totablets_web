@@ -4,6 +4,7 @@ class Rental < ActiveRecord::Base
 
 	belongs_to :customer
 	belongs_to :location
+	has_one :device
 	has_and_belongs_to_many :taxes, :class_name => 'Tax'
 
 	def self.lock_app

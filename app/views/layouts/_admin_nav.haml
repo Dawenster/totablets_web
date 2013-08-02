@@ -1,0 +1,7 @@
+%ul.nav.nav-pills.nav-stacked.admin-ul
+	%li{ :class => params[:controller] == "locations" ? "active" : nil }
+		%a{ :href => locations_path } Locations
+	%li{ :class => params[:controller] == "devices" ? "active" : nil }
+		%a{ :href => locations_path } Devices
+	%li{ :class => params[:controller] == "taxes" ? "active" : nil }
+		%a{ :href => locations_path } Taxes

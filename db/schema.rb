@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130718001142) do
+ActiveRecord::Schema.define(:version => 20130802053621) do
 
   create_table "customers", :force => true do |t|
     t.string   "name"
@@ -20,6 +20,15 @@ ActiveRecord::Schema.define(:version => 20130718001142) do
     t.string   "stripe_customer_id"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
+  end
+
+  create_table "devices", :force => true do |t|
+    t.string   "name"
+    t.string   "profile_value"
+    t.string   "device_type"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "location_id"
   end
 
   create_table "locations", :force => true do |t|
@@ -33,7 +42,6 @@ ActiveRecord::Schema.define(:version => 20130718001142) do
   end
 
   create_table "rentals", :force => true do |t|
-    t.string   "device_name"
     t.string   "location_detail"
     t.integer  "days"
     t.datetime "start_date"
@@ -48,6 +56,7 @@ ActiveRecord::Schema.define(:version => 20130718001142) do
     t.datetime "updated_at",      :null => false
     t.integer  "rate"
     t.integer  "tax_rate"
+    t.integer  "device_id"
   end
 
   create_table "rentals_taxes", :force => true do |t|
