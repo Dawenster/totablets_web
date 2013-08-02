@@ -1,0 +1,33 @@
+= form_for @location do |f|
+	%fieldset		
+		.form-group
+			%label{ :for => "location_name" }
+				%b Name
+			= f.text_field :name, :value => @location.name, :class => "form-control"
+
+		.form-group
+			%label{ :for => "location_location_type" }
+				%b Location type
+			= f.text_field :location_type, :value => @location.location_type, :class => "form-control"
+
+		.form-group
+			%label{ :for => "location_city" }
+				%b City
+			= f.text_field :city, :value => @location.city, :class => "form-control"
+
+		.form-group
+			%label{ :for => "location_province_or_state" }
+				%b Province or state
+			= f.text_field :province_or_state, :value => @location.province_or_state, :class => "form-control"
+
+		.form-group
+			%label{ :for => "location_country" }
+				%b Country
+			= f.text_field :country, :value => @location.country, :class => "form-control"
+
+		.submit-button
+			%button.btn.btn-success{ :type => "submit" }
+				= "#{Location.find_by_id(@location.id) ? "Save" : "Create"}"
+
+			- if Location.find_by_id(@location.id)
+				= link_to "Delete", location_path(@location), :method => :delete, :confirm => "You know what you're doing right?  You're about to delete this location...", :style => "margin-left: 10px;"

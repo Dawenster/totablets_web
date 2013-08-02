@@ -5,6 +5,10 @@
 				= render "layouts/admin_nav"
 
 			.span8
+				#flash
+					- flash.each do |name, msg|
+						= content_tag :div, msg, :id => "flash_#{name}", class: "alert alert-#{name}"
+
 				%h3.admin-title All locations
 
 				.add-item
@@ -23,7 +27,7 @@
 					- @locations.each do |location|
 						%tr
 							%td
-								%a{ :href => location_path(location) }
+								%a{ :href => edit_location_path(location) }
 									= location.name
 							%td
 								= location.location_type

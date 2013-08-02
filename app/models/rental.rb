@@ -12,8 +12,8 @@ class Rental < ActiveRecord::Base
 		a.get('https://account.meraki.com/secure/login/dashboard_login') do |page|
 
 		  my_page = page.form_with(:action => 'https://account.meraki.com/login/login') do |f|
-		    f.email = "dstwen@gmail.com"
-		    f.password = "Wahowe100!"
+		    f.email = ENV['MERAKI_EMAIL']
+		    f.password = ENV['MERAKI_PASSWORD']
 		  end.click_button
 
 		  a.get("https://n38.meraki.com/Systems-Manager/n/xkWsDaM/manage/configure/pcc_ios") do |settings_page|
@@ -38,8 +38,8 @@ class Rental < ActiveRecord::Base
 		a.get('https://account.meraki.com/secure/login/dashboard_login') do |page|
 
 		  my_page = page.form_with(:action => 'https://account.meraki.com/login/login') do |f|
-		    f.email = "dstwen@gmail.com"
-		    f.password = "Wahowe100!"
+		    f.email = ENV['MERAKI_EMAIL']
+		    f.password = ENV['MERAKI_PASSWORD']
 		  end.click_button
 
 		  a.get("https://n38.meraki.com/Systems-Manager/n/xkWsDaM/manage/configure/pcc_ios") do |settings_page|
