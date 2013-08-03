@@ -1,0 +1,34 @@
+.main-container
+	.admin-page
+		.row
+			.span2
+				= render "layouts/admin_nav"
+
+			.span8
+				#flash
+					- flash.each do |name, msg|
+						= content_tag :div, msg, :id => "flash_#{name}", class: "alert alert-#{name}"
+
+				%h3.admin-title All devices
+
+				.add-item
+					%a{ :href => new_device_path } + Add Device
+
+				%table.table.table-striped
+					%tr
+						%th Name
+						%th Device type
+						%th Location
+						%th Profile value
+
+					- @devices.each do |device|
+						%tr
+							%td
+								%a{ :href => edit_device_path(device) }
+									= device.name
+							%td
+								= device.device_type
+							%td
+								= device.location.try(:name) ? device.location.name : "Dev Machine"
+							%td
+								= device.profile_value

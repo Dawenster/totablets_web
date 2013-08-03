@@ -1,0 +1,28 @@
+= form_for @device do |f|
+	%fieldset		
+		.form-group
+			%label{ :for => "device_name" }
+				%b Name
+			= f.text_field :name, :value => @device.name, :class => "form-control"
+
+		.form-group
+			%label{ :for => "device_device_type" }
+				%b Device type
+			= f.text_field :device_type, :value => @device.device_type, :class => "form-control"
+
+		.form-group
+			%label{ :for => "device_location_id" }
+				%b Location
+			= f.select :location_id, Location.all.collect {|location| [ location.name, location.id ] }, :include_blank => "Dev machine"
+
+		.form-group
+			%label{ :for => "device_profile_value" }
+				%b Profile value
+			= f.text_field :profile_value, :value => @device.profile_value, :class => "form-control"
+
+		.submit-button
+			%button.btn.btn-success{ :type => "submit" }
+				= "#{Device.find_by_id(@device.id) ? "Save" : "Create"}"
+
+			- if Device.find_by_id(@device.id)
+				= link_to "Delete", device_path(@device), :method => :delete, :confirm => "You know what you're doing right?  You're about to delete this device...", :style => "margin-left: 10px;"
