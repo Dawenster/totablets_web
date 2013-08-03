@@ -7,7 +7,8 @@ class Rental < ActiveRecord::Base
 	has_one :device
 	has_and_belongs_to_many :taxes, :class_name => 'Tax'
 
-	def self.lock_app
+	def self.lock_app(device_name)
+		device = Device.find_by_name(device_name)
 		a = Mechanize.new
 		a.get('https://account.meraki.com/secure/login/dashboard_login') do |page|
 
@@ -20,7 +21,7 @@ class Rental < ActiveRecord::Base
 			  settings_page.form_with(:action => '/Systems-Manager/n/xkWsDaM/manage/configure/update_pcc_ios') do |form|
 			  	# puts "Before click: the box is #{form.checkbox_with(:id => 'profile_applock_enabled').checked ? "" : "un"}checked"
 			  	form.checkbox_with(:id => "profile_enable_restrictions").check
-			  	form["profile[id]"] = "584342051651323254"
+			  	form["profile[id]"] = device.profile_value
 				  form.checkbox_with(:id => "profile_applock_enabled").check
 				  form["profile[applock][enabled]"] = true
 				  form.field_with(:id => 'profile_applock_app_select').options[4].click
@@ -33,7 +34,8 @@ class Rental < ActiveRecord::Base
 		end
 	end
 
-	def self.unlock_app
+	def self.unlock_app(device_name)
+		device = Device.find_by_name(device_name)
 		a = Mechanize.new
 		a.get('https://account.meraki.com/secure/login/dashboard_login') do |page|
 
@@ -45,7 +47,7 @@ class Rental < ActiveRecord::Base
 		  a.get("https://n38.meraki.com/Systems-Manager/n/xkWsDaM/manage/configure/pcc_ios") do |settings_page|
 			  settings_page.form_with(:action => '/Systems-Manager/n/xkWsDaM/manage/configure/update_pcc_ios') do |form|
 			  	form.checkbox_with(:id => "profile_enable_restrictions").check
-			  	form["profile[id]"] = "584342051651323254"
+			  	form["profile[id]"] = device.profile_value
 				  form.checkbox_with(:id => "profile_applock_enabled").uncheck
 				  form["profile[applock][enabled]"] = false
 			  	form.checkbox_with(:id => "profile_proxy_enabled").uncheck

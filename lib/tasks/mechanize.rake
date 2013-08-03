@@ -1,10 +1,10 @@
 require 'rubygems'
 require 'mechanize'
 
-task :lock_app => :environment do
-	Rental.lock_app
+task :lock_app, [:profile_value] => :environment do |t, args|
+	Rental.lock_app(args[:profile_value])
 end
 
-task :unlock_app => :environment do
-	Rental.unlock_app
+task :unlock_app, [:profile_value] => :environment do |t, args|
+	Rental.unlock_app(args[:profile_value])
 end

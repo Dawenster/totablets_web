@@ -92,7 +92,7 @@ class RentalsController < ApplicationController
 			puts "Created customer: #{totablets_customer.name} - #{totablets_customer.email}"
 		end
 
-		Rental.unlock_app
+		Rental.unlock_app(params["device_name"])
 
 		render :json => { :stripe_error => "None" }
 	end
