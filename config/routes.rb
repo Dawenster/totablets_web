@@ -5,6 +5,7 @@ Totablets::Application.routes.draw do
 	root to: 'pages#home'
 
   resources :rentals, :only => [:create]
+  get "/location_info" => "rentals#location_info", :as => :location_info
   post "/capture_customer_data" => "rentals#capture_customer_data", :as => :capture_customer_data
 
   scope '/admin' do

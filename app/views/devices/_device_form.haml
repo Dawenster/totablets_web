@@ -13,7 +13,7 @@
 		.form-group
 			%label{ :for => "device_location_id" }
 				%b Location
-			= f.select :location_id, Location.all.collect {|location| [ location.name, location.id ] }, :include_blank => "Dev machine"
+			= f.select :location_id, Location.order("lower(name) ASC").collect {|location| [ location.name, location.id ] }, :include_blank => "Dev machine"
 
 		.form-group
 			%label{ :for => "device_profile_value" }

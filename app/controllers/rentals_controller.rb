@@ -1,5 +1,14 @@
 class RentalsController < ApplicationController
 
+	def location_info
+		location_name = Device.find_by_name(params[:ipad_name]).location.name
+		taxes = {}
+		location.taxes.each { |tax| taxes[tax.name] = tax.rate }
+		respond_to do |format|
+			format.json { render :json => { "location_name" => location_name, "taxes" => taxes } }
+    end
+	end
+
 	def create
 		Stripe.api_key = ENV['STRIPE_SECRET_KEY']
 

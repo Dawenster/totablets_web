@@ -25,6 +25,8 @@
 				%b Country
 			= f.text_field :country, :value => @location.country, :class => "form-control"
 
+		%label{ :for => "location_tax_id" }
+			%b Tax(es)
 		.checkbox.inline
 			= f.collection_check_boxes :tax_ids, Tax.all, :id, :name
 
