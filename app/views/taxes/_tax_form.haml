@@ -1,0 +1,19 @@
+= form_for @tax do |f|
+	%fieldset		
+		.form-group
+			%label{ :for => "tax_name" }
+				%b Name
+			= f.text_field :name, :value => @tax.name, :class => "form-control input-mini"
+
+		.form-group.input-append
+			%label{ :for => "tax_rate" }
+				%b Tax rate
+			= f.text_field :rate, :value => @tax.rate, :class => "form-control input-mini"
+			%span.add-on %
+
+		.submit-button
+			%button.btn.btn-success{ :type => "submit" }
+				= "#{Tax.find_by_id(@tax.id) ? "Save" : "Create"}"
+
+			- if Tax.find_by_id(@tax.id)
+				= link_to "Delete", tax_path(@tax), :method => :delete, :confirm => "You know what you're doing right?  You're about to delete this tax...", :style => "margin-left: 10px;"

@@ -1,4 +1,4 @@
-= form_for @location do |f|
+= simple_form_for @location do |f|
 	%fieldset		
 		.form-group
 			%label{ :for => "location_name" }
@@ -24,6 +24,9 @@
 			%label{ :for => "location_country" }
 				%b Country
 			= f.text_field :country, :value => @location.country, :class => "form-control"
+
+		.checkbox.inline
+			= f.collection_check_boxes :tax_ids, Tax.all, :id, :name
 
 		.submit-button
 			%button.btn.btn-success{ :type => "submit" }

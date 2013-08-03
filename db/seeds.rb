@@ -1,6 +1,6 @@
-Tax.create(:name => "GST", :rate => 5)
+gst = Tax.create(:name => "GST", :rate => 5)
 
-Tax.create(:name => "PST", :rate => 7)
+pst = Tax.create(:name => "PST", :rate => 7)
 
 Location.create(
 	:name => "Nuvo Hotel",

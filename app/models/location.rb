@@ -1,9 +1,10 @@
 class Location < ActiveRecord::Base
-	attr_accessible :name, :location_type, :city, :province_or_state, :country
+	attr_accessible :name, :location_type, :city, :province_or_state, :country, :tax, :tax_id, :tax_ids
 
 	has_many :rentals
 	has_many :customers
 	has_many :devices
+	has_and_belongs_to_many :taxes
 
 	validates :name, :presence => true
 	validates :location_type, :presence => true
