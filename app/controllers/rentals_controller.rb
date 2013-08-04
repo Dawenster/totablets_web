@@ -1,12 +1,10 @@
 class RentalsController < ApplicationController
 
 	def location_info
-		location_name = Device.find_by_name(params[:ipad_name]).location.name
+		location = Device.find_by_name(params[:ipad_name]).location
 		taxes = {}
 		location.taxes.each { |tax| taxes[tax.name] = tax.rate }
-		respond_to do |format|
-			format.json { render :json => { "location_name" => location_name, "taxes" => taxes } }
-    end
+		render :json => { "location_name" => location.name, "currency" => location.currency, "taxes" => taxes }
 	end
 
 	def create
