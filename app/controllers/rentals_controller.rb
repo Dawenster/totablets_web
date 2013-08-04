@@ -4,7 +4,13 @@ class RentalsController < ApplicationController
 		location = Device.find_by_name(params[:ipad_name]).location
 		taxes = {}
 		location.taxes.each { |tax| taxes[tax.name] = tax.rate }
-		render :json => { "location_name" => location.name, "currency" => location.currency, "taxes" => taxes }
+		render :json => {
+			"location_name" => "#{location.name}, #{location.city}",
+			"currency" => location.currency,
+			"rental_fee" => 2500,
+			"publishable_key" => ENV['STRIPE_PUBLISHABLE_KEY'],
+			"taxes" => taxes
+		}
 	end
 
 	def create

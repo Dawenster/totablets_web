@@ -18,9 +18,8 @@
 					%tr
 						%th Name
 						%th Type
-						%th City
-						%th Province
-						%th Country
+						%th Location
+						%th Currency
 						%th Devices
 						%th Rentals
 
@@ -32,11 +31,9 @@
 							%td
 								= location.location_type
 							%td
-								= location.city
+								= "#{location.city}, #{location.province_or_state}, #{location.country}"
 							%td
-								= location.province_or_state
-							%td
-								= location.country
+								= location.currency
 							%td
 								= location.devices.count
 							%td
