@@ -1,7 +1,7 @@
 class Device < ActiveRecord::Base
 	attr_accessible :name, :profile_value, :device_type, :location, :location_id
 
-	belongs_to :rentals
+	has_many :rentals
 	belongs_to :location
 
 	validates :name, :presence => true

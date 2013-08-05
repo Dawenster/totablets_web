@@ -1,0 +1,45 @@
+.main-container
+	.admin-page
+		.row
+			.span2
+				= render "layouts/admin_nav"
+
+			.span8
+				#flash
+					- flash.each do |name, msg|
+						= content_tag :div, msg, :id => "flash_#{name}", class: "alert alert-#{name}"
+
+				%h3.admin-title All rentals
+
+				.add-item
+					* = Current rental
+
+				%table.table.table-striped
+					%tr
+						%th ID
+						%th Device
+						%th Location
+						%th Start
+						%th End
+						%th Days
+						%th Total
+
+					- @rentals.each do |rental|
+						%tr
+							%td
+								%a{ :href => rental_path(rental) }
+									= rental.id
+							%td
+								%a{ :href => edit_device_path(rental.device) }
+									= "#{rental.device.name}#{'*' if rental.end_date > Time.now}"
+							%td
+								%a{ :href => edit_location_path(rental.location) }
+									= "#{rental.location.name}, #{rental.location.city}"
+							%td
+								= rental.start_date.strftime("%a, %b %d")
+							%td
+								= rental.end_date.strftime("%a, %b %d")
+							%td
+								= rental.days
+							%td
+								= "#{number_to_currency(rental.grand_total / 100.0)} #{rental.currency}"

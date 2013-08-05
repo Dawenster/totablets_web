@@ -1,10 +1,10 @@
 class Rental < ActiveRecord::Base
 	attr_accessible :device_name, :location_detail, :days, :start_date, :end_date, :rate, :subtotal, :tax_rate, :tax_amount, :grand_total,
-									:currency, :customer, :location
+									:currency, :customer, :location, :device, :device_id
 
 	belongs_to :customer
 	belongs_to :location
-	has_one :device
+	belongs_to :device
 	has_and_belongs_to_many :taxes, :class_name => 'Tax'
 
 	def self.lock_app(device_name)

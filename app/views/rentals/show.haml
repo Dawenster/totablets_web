@@ -1,0 +1,102 @@
+.main-container
+	.admin-page
+		.row
+			.span2
+				= render "layouts/admin_nav"
+
+			.span8
+				#flash
+					- flash.each do |name, msg|
+						= content_tag :div, msg, :id => "flash_#{name}", class: "alert alert-#{name}"
+
+				%h3
+					= "Rental ID: ##{@rental.id}"
+
+				%table.table.table-striped
+					%tr
+						%td
+							%b Customer:
+						%td
+							%a{ :href => customer_path(@rental.customer) }
+								= @rental.customer.name
+
+					%tr
+						%td
+							%b Device:
+						%td
+							%a{ :href => edit_device_path(@rental.device) }
+								= @rental.device.name
+
+					%tr
+						%td
+							%b Location:
+						%td
+							%a{ :href => edit_location_path(@rental.location) }
+								= "#{@rental.location.name}, #{@rental.location.city}"
+
+					%tr
+						%td
+							%b Room number:
+						%td
+							= @rental.location_detail
+
+					%tr
+						%td
+							%b Start date:
+						%td
+							= @rental.start_date.strftime("%A, %B %d, %Y")
+
+					%tr
+						%td
+							%b End date:
+						%td
+							= @rental.end_date.strftime("%A, %B %d, %Y")
+
+					%tr
+						%td
+							%b Days:
+						%td
+							= @rental.days
+
+					%tr
+						%td
+							%b Rate:
+						%td
+							= "#{number_to_currency(@rental.rate / 100.0)} / day"
+
+					%tr
+						%td
+							%b Subtotal:
+						%td
+							= "#{number_to_currency(@rental.subtotal / 100.0)}"
+
+					%tr
+						%td
+							%b
+								= "Tax#{'es' if @rental.taxes.count > 1} applied:"
+						%td
+							= @rental.taxes.map{ |tax| tax.name }.join(", ")
+
+					%tr
+						%td
+							%b Total tax rate:
+						%td
+							= "#{@rental.tax_rate}%"
+
+					%tr
+						%td
+							%b Tax amount:
+						%td
+							= "#{number_to_currency(@rental.tax_amount / 100.0)}"
+
+					%tr
+						%td
+							%b Grand total:
+						%td
+							= "#{number_to_currency(@rental.grand_total / 100.0)}"
+
+					%tr
+						%td
+							%b Currency:
+						%td
+							= @rental.currency

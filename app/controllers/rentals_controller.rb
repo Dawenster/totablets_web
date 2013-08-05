@@ -1,5 +1,13 @@
 class RentalsController < ApplicationController
 
+	def index
+		@rentals = Rental.order("start_date DESC")
+	end
+
+	def show
+		@rental = Rental.find(params[:id])
+	end
+
 	def location_info
 		location = Device.find_by_name(params[:ipad_name]).location
 		taxes = {}
@@ -102,7 +110,6 @@ class RentalsController < ApplicationController
 	end
 
 	def capture_customer_data
-		sleep 10
 		totablets_customer = Customer.find_by_email(params[:email])
 
 		if totablets_customer
@@ -127,12 +134,15 @@ class RentalsController < ApplicationController
 				:device => device
 			)
 
+			puts "After rental creation"
+
 			params["tax_names"].split(" and ").each do |tax_name|
 				tax = Tax.find_by_name(tax_name)
 				tax.rentals << rental
 			end
 			render :json => { :rental => rental.id }
 		else
+			puts "No customer..."
 			render :json => { :message => "No customer created yet." }
 		end
 	end

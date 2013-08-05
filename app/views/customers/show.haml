@@ -1,0 +1,38 @@
+.main-container
+	.admin-page
+		.row
+			.span2
+				= render "layouts/admin_nav"
+
+			.span8
+				#flash
+					- flash.each do |name, msg|
+						= content_tag :div, msg, :id => "flash_#{name}", class: "alert alert-#{name}"
+
+				%h3
+					= "Customer #{@customer.id}: #{@customer.name}"
+
+				%table.table.table-striped
+					%tr
+						%td
+							%b Name:
+						%td
+							= @customer.name
+
+					%tr
+						%td
+							%b Email:
+						%td
+							= @customer.email
+
+					%tr
+						%td
+							%b Stripe token:
+						%td
+							= @customer.stripe_token
+
+					%tr
+						%td
+							%b Stripe customer ID:
+						%td
+							= @customer.stripe_customer_id
