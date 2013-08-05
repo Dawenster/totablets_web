@@ -1,14 +1,18 @@
 require 'rubygems'
 require 'mechanize'
 
-task :lock_app, [:profile_value] => :environment do |t, args|
-	Rental.lock_app(args[:profile_value])
+task :lock_app, [:device_name] => :environment do |t, args|
+	Rental.lock_app(args[:device_name])
 end
 
-task :unlock_app, [:profile_value] => :environment do |t, args|
-	Rental.unlock_app(args[:profile_value])
+task :unlock_app, [:device_name] => :environment do |t, args|
+	Rental.unlock_app(args[:device_name])
 end
 
 task :check_completed_rentals => :environment do
-	Rental.where("Time.now")
+	rentals = Rental.where("end_date < '#{Time.now.utc}'").where("finished is null")
+	rentals.each do |rental|
+		Rental.lock_app(rental.device.name)
+		rental.update_attributes(:finished => true)
+	end
 end

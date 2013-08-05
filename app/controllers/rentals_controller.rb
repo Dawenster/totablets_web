@@ -6,13 +6,18 @@ class RentalsController < ApplicationController
 
 	def show
 		@rental = Rental.find(params[:id])
-		timezones = {
+		time_differences = {
 			"PST" => 8,
 			"CST" => 7,
+			"MST" => 7,
 			"EST" => 5
 		}
-		@hour_differential = timezones[@rental.location.timezone]
-		@hour_differential -= 1 if Time.now.dst?
+		@hour_differential = time_differences[@rental.location.timezone]
+
+		Time.zone = "Pacific Time (US & Canada)"
+		in_dst = Time.zone.local(Time.now.year, Time.now.month, Time.now.day, Time.now.hour, Time.now.min, 0).dst?
+		
+		@hour_differential -= 1 if in_dst
 	end
 
 	def location_info

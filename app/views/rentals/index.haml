@@ -31,7 +31,7 @@
 									= rental.id
 							%td
 								%a{ :href => edit_device_path(rental.device) }
-									= "#{rental.device.name}#{'*' if rental.end_date > Time.now}"
+									= "#{rental.device.name}#{'*' unless rental.finished}"
 							%td
 								%a{ :href => edit_location_path(rental.location) }
 									= "#{rental.location.name}, #{rental.location.city}"

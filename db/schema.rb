@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130805013419) do
+ActiveRecord::Schema.define(:version => 20130805020311) do
 
   create_table "customers", :force => true do |t|
     t.string   "name"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(:version => 20130805013419) do
     t.integer  "rate"
     t.integer  "tax_rate"
     t.integer  "device_id"
+    t.boolean  "finished"
   end
 
   create_table "rentals_taxes", :force => true do |t|
