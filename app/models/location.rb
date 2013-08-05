@@ -11,4 +11,6 @@ class Location < ActiveRecord::Base
 	validates :city, :presence => true
 	validates :province_or_state, :presence => true
 	validates :country, :presence => true
+	validates :currency, :presence => true
+	validates :timezone, :presence => true
 end
