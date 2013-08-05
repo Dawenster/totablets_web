@@ -26,6 +26,11 @@
 			= f.text_field :country, :value => @location.country, :class => "form-control"
 
 		.form-group
+			%label{ :for => "location_timezone" }
+				%b Timezone
+			= f.text_field :timezone, :value => @location.timezone, :class => "form-control"
+
+		.form-group
 			%label{ :for => "location_currency" }
 				%b Currency
 			= f.text_field :currency, :value => @location.currency, :class => "form-control"

@@ -8,3 +8,7 @@ end
 task :unlock_app, [:profile_value] => :environment do |t, args|
 	Rental.unlock_app(args[:profile_value])
 end
+
+task :check_completed_rentals => :environment do
+	Rental.where("Time.now")
+end

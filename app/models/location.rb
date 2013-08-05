@@ -1,5 +1,5 @@
 class Location < ActiveRecord::Base
-	attr_accessible :name, :location_type, :city, :province_or_state, :country, :tax, :tax_id, :tax_ids, :currency
+	attr_accessible :name, :location_type, :city, :province_or_state, :country, :tax, :tax_id, :tax_ids, :currency, :timezone
 
 	has_many :rentals
 	has_many :customers

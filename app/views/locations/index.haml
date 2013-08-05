@@ -19,6 +19,7 @@
 						%th Name
 						%th Type
 						%th Location
+						%th Timezone
 						%th Currency
 						%th Devices
 						%th Rentals
@@ -32,6 +33,8 @@
 								= location.location_type
 							%td
 								= "#{location.city}, #{location.province_or_state}, #{location.country}"
+							%td
+								= location.timezone
 							%td
 								= location.currency
 							%td
