@@ -1,0 +1,36 @@
+= form_for @pre_auth do |f|
+	%fieldset
+		%b Stripe pre-authorization ID: 
+		%span
+			= @pre_auth.stripe_pre_auth_id
+
+		.div
+			%b Allowable pre-authorization amount: 
+			%span
+				= "#{number_to_currency(@pre_auth.pre_auth_amount / 100.0)} #{@pre_auth.rental.currency}"
+
+		.div
+			%b Already captured amount: 
+			%span
+				= "#{number_to_currency(@pre_auth.captured_amount / 100.0)} #{@pre_auth.rental.currency}"
+
+		.div
+			%b For rental: 
+			%span
+				%a{ :href => rental_path(@pre_auth.rental) }
+					= @pre_auth.rental.id
+
+		.form-group.input-prepend
+			%label{ :for => "tax_captured_amount" }
+				%b Amount to capture
+			%span.add-on $
+			= f.text_field :captured_amount, :class => "form-control input-mini", :style => "text-align: right;", :value => 0
+
+		.form-group
+			%label{ :for => "tax_description" }
+				%b Description and reason for capture
+			= f.text_area :description, :class => "form-control", :style => "width: 400px;", :rows => 5
+
+		.submit-button
+			%button.btn.btn-success{ :type => "submit", :confirm => "Please be sure - you're about to charge #{@pre_auth.rental.customer.name} for a pre-authorization" }
+				Charge

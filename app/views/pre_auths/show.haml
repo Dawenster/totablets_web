@@ -1,0 +1,58 @@
+.main-container
+	.admin-page
+		.row
+			.span2
+				= render "layouts/admin_nav"
+
+			.span8
+				#flash
+					- flash.each do |name, msg|
+						= content_tag :div, msg, :id => "flash_#{name}", class: "alert alert-#{name}"
+
+				%h3
+					= "Pre-auth ID ##{@pre_auth.id}"
+
+				%table.table.table-striped
+					%tr
+						%td
+							%b Rental ID:
+						%td
+							%a{ :href => rental_path(@pre_auth.rental) }
+								= @pre_auth.rental.id
+
+					%tr
+						%td
+							%b Customer:
+						%td
+							%a{ :href => customer_path(@pre_auth.rental.customer) }
+								= @pre_auth.rental.customer.name
+
+					%tr
+						%td
+							%b Stripe pre-auth ID:
+						%td
+							= @pre_auth.stripe_pre_auth_id
+
+					%tr
+						%td
+							%b Pre-auth amount:
+						%td
+							= "#{number_to_currency(@pre_auth.pre_auth_amount / 100.0)} #{@pre_auth.rental.currency}"
+
+					%tr
+						%td
+							%b Captured amount:
+						%td
+							= "#{number_to_currency(@pre_auth.captured_amount / 100.0)} #{@pre_auth.rental.currency}"
+
+					%tr
+						%td
+							%b Charged on:
+						%td
+							= @pre_auth.captured_amount > 0 ? @pre_auth.updated_at.strftime("%b %d, %Y at %H:%m") : "N/A"
+
+					%tr
+						%td
+							%b Description and reason for pre-auth:
+						%td
+							= @pre_auth.description

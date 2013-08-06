@@ -100,3 +100,15 @@
 							%b Currency:
 						%td
 							= @rental.currency
+
+					%tr
+						%td
+							%b Stripe charge ID:
+						%td
+							= @rental.stripe_rental_charge_id
+
+					%tr
+						%td
+							%b Stripe pre-authorization ID:
+						%td
+							= @rental.pre_auth.stripe_pre_auth_id

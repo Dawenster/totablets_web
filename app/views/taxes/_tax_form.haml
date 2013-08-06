@@ -8,7 +8,7 @@
 		.form-group.input-append
 			%label{ :for => "tax_rate" }
 				%b Tax rate
-			= f.text_field :rate, :value => @tax.rate, :class => "form-control input-mini"
+			= f.text_field :rate, :value => @tax.rate, :class => "form-control input-mini", :style => "text-align:right;"
 			%span.add-on %
 
 		.submit-button

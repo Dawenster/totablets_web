@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130805020311) do
+ActiveRecord::Schema.define(:version => 20130806013841) do
 
   create_table "customers", :force => true do |t|
     t.string   "name"
@@ -48,6 +48,16 @@ ActiveRecord::Schema.define(:version => 20130805020311) do
     t.integer "tax_id"
   end
 
+  create_table "pre_auths", :force => true do |t|
+    t.string   "stripe_pre_auth_id"
+    t.integer  "pre_auth_amount"
+    t.integer  "captured_amount",    :default => 0
+    t.text     "description"
+    t.integer  "rental_id"
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+  end
+
   create_table "rentals", :force => true do |t|
     t.string   "location_detail"
     t.integer  "days"
@@ -59,12 +69,13 @@ ActiveRecord::Schema.define(:version => 20130805020311) do
     t.string   "currency"
     t.integer  "customer_id"
     t.integer  "location_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
     t.integer  "rate"
     t.integer  "tax_rate"
     t.integer  "device_id"
     t.boolean  "finished"
+    t.string   "stripe_rental_charge_id"
   end
 
   create_table "rentals_taxes", :force => true do |t|

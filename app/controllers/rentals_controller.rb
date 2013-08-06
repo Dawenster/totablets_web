@@ -16,7 +16,7 @@ class RentalsController < ApplicationController
 
 		Time.zone = "Pacific Time (US & Canada)"
 		in_dst = Time.zone.local(Time.now.year, Time.now.month, Time.now.day, Time.now.hour, Time.now.min, 0).dst?
-		
+
 		@hour_differential -= 1 if in_dst
 	end
 
@@ -58,14 +58,22 @@ class RentalsController < ApplicationController
 				)
 
 				# Charge the new customer instead of the card
-				Stripe::Charge.create(
+				rental_charge = Stripe::Charge.create(
 			    :amount => params[:grand_total], # in cents
 			    :currency => params[:currency].downcase,
 			    :customer => stripe_customer.id,
 			    :description => "#{params[:location]} iPad rental: #{params[:days]} days at $#{params[:rate].to_i / 100}/day (plus #{params[:tax_names]})"
 				)
 
-				stripe_customer_id = stripe_customer.id
+				# Charge a damage / theft pre-authorization on the card
+				pre_auth_amount = 75000
+				pre_auth = Stripe::Charge.create(
+			    :amount => pre_auth_amount, # in cents
+			    :currency => params[:currency].downcase,
+			    :customer => stripe_customer.id,
+			    :description => "PRE-AUTHORIZATION: #{params[:location]} iPad rental: #{params[:days]} days at $#{params[:rate].to_i / 100}/day (plus #{params[:tax_names]})",
+			    :capture => false
+				)
 			end
 
 		rescue Stripe::CardError => e # Since it's a decline, Stripe::CardError will be caught
@@ -111,14 +119,19 @@ class RentalsController < ApplicationController
 				:name => params[:name],
 				:email => params[:email],
 				:stripe_token => params[:stripe_token],
-				:stripe_customer_id => stripe_customer_id
+				:stripe_customer_id => stripe_customer.id
 			)
 			puts "Created customer: #{totablets_customer.name} - #{totablets_customer.email}"
 		end
 
 		Rental.unlock_app(params["device_name"])
 
-		render :json => { :stripe_error => "None" }
+		render :json => {
+			:stripe_error => "None", 
+			:rental_charge_id => rental_charge.id, 
+			:pre_auth_id => pre_auth.id,
+			:pre_auth_amount => pre_auth.amount
+		}
 	end
 
 	def capture_customer_data
@@ -141,12 +154,17 @@ class RentalsController < ApplicationController
 	      :tax_amount => params["tax_amount"].to_i,
 	      :grand_total => params["grand_total"].to_i,
 				:currency => params["currency"],
+				:stripe_rental_charge_id => params["rental_charge_id"],
 	      :customer => totablets_customer,
 	      :location => location,
 				:device => device
 			)
 
-			puts "After rental creation"
+			PreAuth.create(
+				:stripe_pre_auth_id => params["pre_auth_id"],
+				:pre_auth_amount => params["pre_auth_amount"].to_i,
+				:rental => rental
+			)
 
 			params["tax_names"].split(" and ").each do |tax_name|
 				tax = Tax.find_by_name(tax_name)
@@ -154,7 +172,6 @@ class RentalsController < ApplicationController
 			end
 			render :json => { :rental => rental.id }
 		else
-			puts "No customer..."
 			render :json => { :message => "No customer created yet." }
 		end
 	end
