@@ -41,14 +41,24 @@ class RentalsController < ApplicationController
 		totablets_customer = Customer.find_by_email(params[:email])
 
 		begin
+			pre_auth_amount = 75000
 
 			if totablets_customer
 				# Charge the repeat customer instead of the card
-				Stripe::Charge.create(
+				rental_charge = Stripe::Charge.create(
 			    :amount => params[:grand_total], # in cents
 			    :currency => params[:currency].downcase,
 			    :customer => totablets_customer.stripe_customer_id,
 			    :description => "#{params[:location]} iPad rental: #{params[:days]} days at $#{params[:rate].to_i / 100}/day (plus #{params[:tax_names]})"
+				)
+
+				# Charge a damage / theft pre-authorization on the card
+				pre_auth = Stripe::Charge.create(
+			    :amount => pre_auth_amount, # in cents
+			    :currency => params[:currency].downcase,
+			    :customer => totablets_customer.stripe_customer_id,
+			    :description => "PRE-AUTHORIZATION: #{params[:location]} iPad rental: #{params[:days]} days at $#{params[:rate].to_i / 100}/day (plus #{params[:tax_names]})",
+			    :capture => false
 				)
 			else
 				# Create a Stripe customer
@@ -66,7 +76,6 @@ class RentalsController < ApplicationController
 				)
 
 				# Charge a damage / theft pre-authorization on the card
-				pre_auth_amount = 75000
 				pre_auth = Stripe::Charge.create(
 			    :amount => pre_auth_amount, # in cents
 			    :currency => params[:currency].downcase,
