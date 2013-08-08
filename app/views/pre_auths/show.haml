@@ -55,4 +55,4 @@
 						%td
 							%b Description and reason for pre-auth:
 						%td
-							= @pre_auth.description
+							= @pre_auth.description.present? ? @pre_auth.description : "N/A"
