@@ -17,6 +17,7 @@ Totablets::Application.routes.draw do
 	  resources :devices, :except => [:show]
 	  resources :taxes, :except => [:show]
 	  resources :pre_auths, :only => [:index, :show, :edit, :update]
+	  resources :admin_accesses, :only => [:index]
 	end
 
   mount Resque::Server.new, :at => "/resque"

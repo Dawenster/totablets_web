@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(:version => 20130810032426) do
 
-  create_table "admin_access", :force => true do |t|
+  create_table "admin_accesses", :force => true do |t|
     t.string   "device_name_during_access"
     t.string   "location_during_access"
     t.string   "action"

@@ -1,4 +1,5 @@
 class RentalsController < ApplicationController
+	http_basic_authenticate_with :name => ENV['ADMIN_NAME'], :password => ENV['ADMIN_PASSWORD'], :only => [:index, :show]
 
 	def index
 		@rentals = Rental.order("start_date DESC")
@@ -25,7 +26,6 @@ class RentalsController < ApplicationController
 		location = device.location
 		taxes = {}
 		location.taxes.each { |tax| taxes[tax.name] = tax.rate }
-		puts device.admin_password
 		render :json => {
 			"location_name" => "#{location.name}, #{location.city}",
 			"currency" => location.currency,
@@ -189,11 +189,35 @@ class RentalsController < ApplicationController
 	end
 
 	def admin_command
+		device = Device.find_by_name(params["ipad_name"])
 		if params["command"] == "unlock"
-			Rental.unlock_app(params["ipad_name"])
+			Rental.unlock_app(device.name)
 		else
-			Rental.lock_app(params["ipad_name"])
+			Rental.lock_app(device.name)
 		end
+		AdminAccess.create(
+			:device_name_during_access => device.name,
+			:location_during_access => "#{device.location.name}, #{device.location.city}",
+			:action => params["command"]
+		)
 		render :json => { :command => params["command"] }
 	end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

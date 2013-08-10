@@ -1,4 +1,6 @@
 class PreAuthsController < ApplicationController
+	http_basic_authenticate_with :name => ENV['ADMIN_NAME'], :password => ENV['ADMIN_PASSWORD']
+	
 	def index
 		@pre_auths = PreAuth.order("created_at DESC")
 	end

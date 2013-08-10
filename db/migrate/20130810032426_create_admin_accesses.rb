@@ -1,6 +1,6 @@
-class CreateAdminAccess < ActiveRecord::Migration
+class CreateAdminAccesses < ActiveRecord::Migration
   def change
-  	create_table :admin_access do |t|
+  	create_table :admin_accesses do |t|
       t.string :device_name_during_access
       t.string :location_during_access
       t.string :action

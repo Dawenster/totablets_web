@@ -10,4 +10,6 @@
 	%li{ :class => params[:controller] == "taxes" ? "active" : nil }
 		%a{ :href => taxes_path } Taxes
 	%li{ :class => params[:controller] == "pre_auths" ? "active" : nil }
-		%a{ :href => pre_auths_path } Pre-Auths
+		%a{ :href => pre_auths_path } Pre-auths
+	%li{ :class => params[:controller] == "admin_accesses" ? "active" : nil }
+		%a{ :href => admin_accesses_path } Admin accesses
