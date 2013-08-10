@@ -1,5 +1,5 @@
 class Device < ActiveRecord::Base
-	attr_accessible :name, :profile_value, :device_type, :location, :location_id
+	attr_accessible :name, :profile_value, :device_type, :location, :location_id, :admin_password
 
 	has_many :rentals
 	belongs_to :location

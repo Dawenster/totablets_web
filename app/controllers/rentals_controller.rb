@@ -21,15 +21,18 @@ class RentalsController < ApplicationController
 	end
 
 	def location_info
-		location = Device.find_by_name(params[:ipad_name]).location
+		device = Device.find_by_name(params[:ipad_name])
+		location = device.location
 		taxes = {}
 		location.taxes.each { |tax| taxes[tax.name] = tax.rate }
+		puts device.admin_password
 		render :json => {
 			"location_name" => "#{location.name}, #{location.city}",
 			"currency" => location.currency,
 			"rental_fee" => 2500,
 			"publishable_key" => ENV['STRIPE_PUBLISHABLE_KEY'],
-			"taxes" => taxes
+			"taxes" => taxes,
+			"admin_password" => device.admin_password
 		}
 	end
 
@@ -183,5 +186,14 @@ class RentalsController < ApplicationController
 		else
 			render :json => { :message => "No customer created yet." }
 		end
+	end
+
+	def admin_command
+		if params["command"] == "unlock"
+			Rental.unlock_app(params["ipad_name"])
+		else
+			Rental.lock_app(params["ipad_name"])
+		end
+		render :json => { :command => params["command"] }
 	end
 end

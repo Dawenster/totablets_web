@@ -20,6 +20,11 @@
 				%b Profile value
 			= f.text_field :profile_value, :value => @device.profile_value, :class => "form-control"
 
+		.form-group
+			%label{ :for => "device_admin_password" }
+				%b Admin password
+			= f.text_field :admin_password, :value => @device.admin_password, :class => "form-control"
+
 		.submit-button
 			%button.btn.btn-success{ :type => "submit" }
 				= "#{Device.find_by_id(@device.id) ? "Save" : "Create"}"

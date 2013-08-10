@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130806013841) do
+ActiveRecord::Schema.define(:version => 20130810032426) do
+
+  create_table "admin_access", :force => true do |t|
+    t.string   "device_name_during_access"
+    t.string   "location_during_access"
+    t.string   "action"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
 
   create_table "customers", :force => true do |t|
     t.string   "name"
@@ -26,9 +34,10 @@ ActiveRecord::Schema.define(:version => 20130806013841) do
     t.string   "name"
     t.string   "profile_value"
     t.string   "device_type"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
     t.integer  "location_id"
+    t.string   "admin_password"
   end
 
   create_table "locations", :force => true do |t|
