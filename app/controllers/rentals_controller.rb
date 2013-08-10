@@ -2,7 +2,7 @@ class RentalsController < ApplicationController
 	http_basic_authenticate_with :name => ENV['ADMIN_NAME'], :password => ENV['ADMIN_PASSWORD'], :only => [:index, :show]
 
 	def index
-		@rentals = Rental.order("start_date DESC")
+		@rentals = Rental.order("start_date DESC").paginate(page: params[:page], :per_page => 25)
 	end
 
 	def show

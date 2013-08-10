@@ -166,6 +166,7 @@ GEM
     vegas (0.1.11)
       rack (>= 1.0.0)
     webrobots (0.1.1)
+    will_paginate (3.0.4)
 
 PLATFORMS
   ruby
@@ -186,3 +187,4 @@ DEPENDENCIES
   stripe!
   thin
   uglifier (>= 1.0.3)
+  will_paginate

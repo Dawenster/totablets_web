@@ -43,3 +43,5 @@
 								= rental.days
 							%td
 								= "#{number_to_currency(rental.grand_total / 100.0)} #{rental.currency}"
+
+				= will_paginate @rentals, :params => { :controller => "rentals", :action => "index" }

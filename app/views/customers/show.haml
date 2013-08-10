@@ -36,3 +36,9 @@
 							%b Stripe customer ID:
 						%td
 							= @customer.stripe_customer_id
+
+					%tr
+						%td
+							%b All rentals:
+						%td
+							= @customer.rentals.map{ |rental| "<a href='#{rental_path(rental.id)}'>#{rental.id}</a>" }.join(", ").html_safe
