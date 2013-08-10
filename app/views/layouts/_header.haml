@@ -1,14 +1,12 @@
 .navbar.navbar-fixed-top.navbar-inverse
   .navbar-inner
-    %a.brand.smoothScroll{:href => "#what"} TO Tablets
+    %a.brand.smoothScroll{:href => "#{params[:controller] == 'pages' ? '#what' : root_path(:anchor => 'what')}"} TO Tablets
     %ul.nav
       %li.active
-        %a.smoothScroll{:href => "#what"} What we do
+        %a.smoothScroll{:href => "#{params[:controller] == 'pages' ? '#what' : root_path(:anchor => 'what')}"} What we do
       %li
-        %a.smoothScroll{:href => "#how"} How does it work
+        %a.smoothScroll{:href => "#{params[:controller] == 'pages' ? '#how' : root_path(:anchor => 'how')}"} How does it work
       %li
-        %a.smoothScroll{:href => "#why"} Why it's cool
-      / %li
-      /   %a.smoothScroll{:href => "#where"} Where
+        %a.smoothScroll{:href => "#{params[:controller] == 'pages' ? '#why' : root_path(:anchor => 'why')}"} Why it's cool
       %li
-        %a.smoothScroll{:href => "#who"} Who we are
+        %a.smoothScroll{:href => "#{params[:controller] == 'pages' ? '#who' : root_path(:anchor => 'who')}"} Who we are
