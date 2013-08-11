@@ -44,13 +44,13 @@
 						%td
 							%b Start date and time:
 						%td
-							= "#{(@rental.start_date - @hour_differential.hours).strftime("%A, %B %d, %Y at %I:%M %p")} #{@rental.location.timezone}"
+							= "#{(@rental.start_date + @hour_differential.hours).strftime("%A, %B %d, %Y at %I:%M %p")} #{@rental.location.timezone}"
 
 					%tr
 						%td
 							%b End date and time:
 						%td
-							= "#{(@rental.end_date - @hour_differential.hours).strftime("%A, %B %d, %Y at %I:%M %p")} #{@rental.location.timezone}"
+							= "#{(@rental.end_date + @hour_differential.hours).strftime("%A, %B %d, %Y at %I:%M %p")} #{@rental.location.timezone}"
 
 					%tr
 						%td
