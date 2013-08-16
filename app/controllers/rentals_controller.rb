@@ -23,6 +23,7 @@ class RentalsController < ApplicationController
 
 	def location_info
 		device = Device.find_by_name(params[:ipad_name])
+		device = Device.first if device.nil?
 		location = device.location
 		taxes = {}
 		location.taxes.each { |tax| taxes[tax.name] = tax.rate }
