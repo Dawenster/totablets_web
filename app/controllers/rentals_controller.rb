@@ -30,10 +30,12 @@ class RentalsController < ApplicationController
 		render :json => {
 			"location_name" => "#{location.name}, #{location.city}",
 			"currency" => location.currency,
-			"rental_fee" => 2500,
+			"rental_fee" => KeyInput.last.rate,
+			"pre_auth_amount" => KeyInput.last.pre_auth_amount,
 			"publishable_key" => ENV['STRIPE_PUBLISHABLE_KEY'],
 			"taxes" => taxes,
-			"admin_password" => device.admin_password
+			"admin_password" => device.admin_password,
+			"terms_and_conditions" => KeyInput.last.terms_and_conditions
 		}
 	end
 
@@ -45,7 +47,7 @@ class RentalsController < ApplicationController
 		totablets_customer = Customer.find_by_email(params[:email])
 
 		begin
-			pre_auth_amount = 75000
+			pre_auth_amount = params[:pre_auth_amount].to_i
 
 			if totablets_customer
 				# Charge the repeat customer instead of the card

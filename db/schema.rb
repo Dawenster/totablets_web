@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130810032426) do
+ActiveRecord::Schema.define(:version => 20130825210741) do
 
   create_table "admin_accesses", :force => true do |t|
     t.string   "device_name_during_access"
@@ -38,6 +38,14 @@ ActiveRecord::Schema.define(:version => 20130810032426) do
     t.datetime "updated_at",     :null => false
     t.integer  "location_id"
     t.string   "admin_password"
+  end
+
+  create_table "key_inputs", :force => true do |t|
+    t.integer  "rate"
+    t.integer  "pre_auth_amount"
+    t.text     "terms_and_conditions"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
   end
 
   create_table "locations", :force => true do |t|
@@ -85,6 +93,7 @@ ActiveRecord::Schema.define(:version => 20130810032426) do
     t.integer  "device_id"
     t.boolean  "finished"
     t.string   "stripe_rental_charge_id"
+    t.text     "terms_and_conditions"
   end
 
   create_table "rentals_taxes", :force => true do |t|

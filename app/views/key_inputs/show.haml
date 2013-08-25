@@ -1,0 +1,27 @@
+.main-container
+	.admin-page
+		.row
+			.span2
+				= render "layouts/admin_nav"
+
+			.span8
+				#flash
+					- flash.each do |name, msg|
+						= content_tag :div, msg, :id => "flash_#{name}", class: "alert alert-#{name}"
+
+				%h3 Key Information
+
+				%a{ :href => edit_key_input_path, :style => "float: right; margin-top: -35px;" } Edit key info
+
+				%h4 Daily rate:
+				%p
+					= "#{number_to_currency(@key_input.rate / 100.0)}"
+					
+				%h4 Pre-authorization amount:
+				%p
+					= "#{number_to_currency(@key_input.pre_auth_amount / 100.0)}"
+
+				%h4
+					= "Terms and conditions (last updated on #{@key_input.updated_at.strftime('%A, %b %d, %Y')})"
+				%p
+					= simple_format(@key_input.terms_and_conditions)

@@ -11,6 +11,7 @@ Totablets::Application.routes.draw do
 
   scope '/admin' do
 	  get '/' => 'admins#index', :as => :admin_index
+	  resources :key_inputs, :only => [:show, :edit, :update]
 	  resources :rentals, :only => [:index, :show]
 	  resources :customers, :only => [:index, :show]
 	  resources :locations, :except => [:show]
