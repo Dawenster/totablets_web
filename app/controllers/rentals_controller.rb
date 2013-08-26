@@ -158,6 +158,8 @@ class RentalsController < ApplicationController
 			start_date = DateTime.strptime(params["start_date"].gsub("  0000",""), "%Y-%m-%d %H:%M:%S")
 			end_date = DateTime.strptime(params["end_date"].gsub("  0000",""), "%Y-%m-%d %H:%M:%S")
 
+			Rental.stop_existing_rentals(device)
+
 			rental = Rental.create(
 	      :location_detail => params["location_detail"],
 	      :days => params["days"].to_i,
@@ -172,7 +174,8 @@ class RentalsController < ApplicationController
 				:stripe_rental_charge_id => params["rental_charge_id"],
 	      :customer => totablets_customer,
 	      :location => location,
-				:device => device
+				:device => device,
+				:terms_and_conditions => params["terms_and_conditions"]
 			)
 
 			PreAuth.create(
@@ -196,6 +199,7 @@ class RentalsController < ApplicationController
 		if params["command"] == "unlock"
 			Rental.unlock_app(device.name)
 		else
+			Rental.stop_existing_rentals(device)
 			Rental.lock_app(device.name)
 		end
 		AdminAccess.create(

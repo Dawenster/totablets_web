@@ -1,6 +1,7 @@
 class Rental < ActiveRecord::Base
-	attr_accessible :device_name, :location_detail, :days, :start_date, :end_date, :rate, :subtotal, :tax_rate, :tax_amount, :grand_total,
-									:currency, :customer, :location, :device, :device_id, :finished, :stripe_rental_charge_id
+	attr_accessible :device_name, :location_detail, :days, :start_date, :end_date, :rate, :subtotal, :tax_rate, :tax_amount,
+									:grand_total, :currency, :customer, :location, :device, :device_id, :finished, :stripe_rental_charge_id,
+									:terms_and_conditions
 
 	belongs_to :customer
 	belongs_to :location
@@ -10,13 +11,24 @@ class Rental < ActiveRecord::Base
 
 	def self.lock_app(device_name)
 		device = Device.find_by_name(device_name)
+
 		a = Mechanize.new
 		a.get('https://account.meraki.com/secure/login/dashboard_login') do |page|
 
-		  my_page = page.form_with(:action => 'https://account.meraki.com/login/login') do |f|
-		    f.email = ENV['MERAKI_EMAIL']
+			my_page = page.form_with(:action => 'https://account.meraki.com/login/login') do |f|
+				f.email = ENV['MERAKI_EMAIL']
 		    f.password = ENV['MERAKI_PASSWORD']
 		  end.click_button
+
+		 #  headers = {
+			#   "Accept" => "application/json, text/javascript, */*; q=0.01",
+			# 	"Accept-Encoding" => "gzip,deflate,sdch",
+			# 	"Accept-Language" => "en-US,en;q=0.8",
+			# 	"Content-Type" => "application/json; charset=utf-8",
+			# 	"X-Requested-With" => "XMLHttpRequest"
+			# }
+
+		 #  a.post("https://n38.meraki.com/Systems-Manager/n/xkWsDaM/manage/pcc/mdm_clear_passcode/584342051651324544", { "_ts" => 1377481330901 }, headers)
 
 		  a.get("https://n38.meraki.com/Systems-Manager/n/xkWsDaM/manage/configure/pcc_ios") do |settings_page|
 			  settings_page.form_with(:action => '/Systems-Manager/n/xkWsDaM/manage/configure/update_pcc_ios') do |form|
@@ -37,6 +49,7 @@ class Rental < ActiveRecord::Base
 
 	def self.unlock_app(device_name)
 		device = Device.find_by_name(device_name)
+
 		a = Mechanize.new
 		a.get('https://account.meraki.com/secure/login/dashboard_login') do |page|
 
@@ -56,6 +69,13 @@ class Rental < ActiveRecord::Base
 			  	puts after_save_page.body
 				end
 			end
+		end
+	end
+
+	def self.stop_existing_rentals(device)
+		ongoing_rentals = device.rentals.select{ |rental| rental.finished.nil? }
+		ongoing_rentals.each do |rental|
+			rental.update_attributes(:end_date => Time.now, :finished => true)
 		end
 	end
 end
