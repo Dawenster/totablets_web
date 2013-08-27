@@ -19,6 +19,7 @@
 						%th Date accessed
 
 					- @admin_accesses.each do |admin_access|
+						- timezone = Location.find_by_name(admin_access.location_during_access.split(',').first).try(:timezone) || "PST"
 						%tr
 							%td
 								= admin_access.device_name_during_access
@@ -27,4 +28,6 @@
 							%td
 								= admin_access.location_during_access
 							%td
-								= admin_access.created_at.strftime("%b %d, %Y at %H:%M (%a)")
+								= "#{(admin_access.created_at + @time_differences[timezone]).strftime("%b %d, %Y at %H:%M (%a)")} #{timezone}"
+
+				= will_paginate @admin_accesses, :params => { :controller => "admin_accesses", :action => "index" }
