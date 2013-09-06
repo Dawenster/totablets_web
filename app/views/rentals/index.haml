@@ -33,8 +33,11 @@
 								%a{ :href => edit_device_path(rental.device) }
 									= "#{rental.device.name}#{'*' unless rental.finished}"
 							%td
-								%a{ :href => edit_location_path(rental.location) }
-									= "#{rental.location.name}, #{rental.location.city}"
+								- if rental.location
+									%a{ :href => edit_location_path(rental.location) }
+										= "#{rental.location.name}, #{rental.location.city}"
+								- else
+									Deleted
 							%td
 								= rental.start_date.strftime("%a, %b %d")
 							%td
