@@ -3,10 +3,10 @@ require 'resque/server'
 Totablets::Application.routes.draw do
 
 	root to: 'pages#home'
+  get '/admin/rentals' => 'rentals#index', :as => :rentals
 
   scope '/admin' do
 	  get '/' => 'admins#index', :as => :admin_index
-	  get '/rentals' => 'rentals#index', :as => :rentals
 	  resources :rentals, :only => [:show]
 	  resources :key_inputs, :only => [:show, :edit, :update]
 	  resources :customers, :only => [:index, :show]
