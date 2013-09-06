@@ -16,7 +16,7 @@ Totablets::Application.routes.draw do
 	  resources :admin_accesses, :only => [:index]
 	end
 
-  # resources :rentals, :only => [:create]
+  resources :rentals, :only => [:create]
   post "/location_info" => "rentals#location_info", :as => :location_info
   post "/capture_customer_data" => "rentals#capture_customer_data", :as => :capture_customer_data
   post "/admin_command" => "rentals#admin_command", :as => :admin_command
