@@ -44,7 +44,7 @@ class RentalsController < ApplicationController
 
 		# Get the credit card details submitted by the form
 		token = params[:stripe_token]
-		totablets_customer = Customer.find_by_email(params[:email])
+		totablets_customer = Customer.find_by_email(params[:email].downcase)
 
 		begin
 			pre_auth_amount = params[:pre_auth_amount].to_i
@@ -132,7 +132,7 @@ class RentalsController < ApplicationController
 		unless totablets_customer
 			totablets_customer = Customer.create(
 				:name => params[:name],
-				:email => params[:email],
+				:email => params[:email].downcase,
 				:stripe_token => params[:stripe_token],
 				:stripe_customer_id => stripe_customer.id
 			)
@@ -150,7 +150,7 @@ class RentalsController < ApplicationController
 	end
 
 	def capture_customer_data
-		totablets_customer = Customer.find_by_email(params[:email])
+		totablets_customer = Customer.find_by_email(params[:email].downcase)
 
 		if totablets_customer
 			location = Location.find_by_name(params["location"].split(", ").first)
