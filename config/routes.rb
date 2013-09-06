@@ -7,7 +7,8 @@ Totablets::Application.routes.draw do
 
   scope '/admin' do
 	  get '/' => 'admins#index', :as => :admin_index
-	  resources :rentals, :only => [:show]
+	  get '/rentals/:id' => 'rentals#show', :as => :rental
+	  # resources :rentals, :only => [:show]
 	  resources :key_inputs, :only => [:show, :edit, :update]
 	  resources :customers, :only => [:index, :show]
 	  resources :locations, :except => [:show]
@@ -17,7 +18,8 @@ Totablets::Application.routes.draw do
 	  resources :admin_accesses, :only => [:index]
 	end
 
-  resources :rentals, :only => [:create]
+  # resources :rentals, :only => [:create]
+  post '/rentals' => 'rentals#create', :as => :rentals
   post "/location_info" => "rentals#location_info", :as => :location_info
   post "/capture_customer_data" => "rentals#capture_customer_data", :as => :capture_customer_data
   post "/admin_command" => "rentals#admin_command", :as => :admin_command
