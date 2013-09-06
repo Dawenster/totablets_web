@@ -2,7 +2,7 @@
 	%li{ :class => params[:controller] == "key_inputs" ? "active" : nil }
 		%a{ :href => key_input_path(KeyInput.last) } Key Info
 	%li{ :class => params[:controller] == "rentals" ? "active" : nil }
-		%a{ :href => '/admin/rentals' } Rentals
+		%a{ :href => rentals_path } Rentals
 	%li{ :class => params[:controller] == "customers" ? "active" : nil }
 		%a{ :href => customers_path } Customers
 	%li{ :class => params[:controller] == "locations" ? "active" : nil }
