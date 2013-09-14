@@ -5,6 +5,7 @@ class Location < ActiveRecord::Base
 	has_many :customers
 	has_many :devices
 	has_and_belongs_to_many :taxes
+	has_and_belongs_to_many :notifications
 
 	validates :name, :presence => true
 	validates :location_type, :presence => true

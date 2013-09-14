@@ -10,6 +10,7 @@ Totablets::Application.routes.draw do
 	  resources :rentals, :only => [:index, :show]
 	  resources :customers, :only => [:index, :show]
 	  resources :locations, :except => [:show]
+	  resources :notifications, :except => [:show]
 	  resources :devices, :except => [:show]
 	  resources :taxes, :except => [:show]
 	  resources :pre_auths, :only => [:index, :show, :edit, :update]
