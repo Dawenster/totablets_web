@@ -11,6 +11,11 @@
 			= f.text_field :rate, :value => @tax.rate, :class => "form-control input-mini", :style => "text-align:right;"
 			%span.add-on %
 
+		%label{ :for => "tax_location_id" }
+			%b Location(s)
+		.checkbox.inline
+			= f.collection_check_boxes :location_ids, Location.all, :id, :name
+
 		.submit-button
 			%button.btn.btn-success{ :type => "submit" }
 				= "#{Tax.find_by_id(@tax.id) ? "Save" : "Create"}"

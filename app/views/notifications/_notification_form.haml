@@ -22,6 +22,11 @@
 				= f.text_field :hour_on_last_day, :value => @notification.hour_on_last_day, :class => "form-control input-mini", :style => "text-align:right;"
 				%span.add-on :00
 
+		%label{ :for => "notification_location_id" }
+			%b Location(s)
+		.checkbox.inline
+			= f.collection_check_boxes :location_ids, Location.all, :id, :name
+
 		.submit-button
 			%button.btn.btn-success{ :type => "submit" }
 				= "#{Notification.find_by_id(@notification.id) ? "Save" : "Create"}"
