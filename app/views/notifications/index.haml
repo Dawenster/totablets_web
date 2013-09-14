@@ -31,4 +31,4 @@
 							%td
 								= notification.message
 							%td
-								= notification.locations.map{ |location| location.name }.join(", ")
+								= notification.locations.count == Location.count ? "All" : notification.locations.map{ |location| location.name }.join(", ")
