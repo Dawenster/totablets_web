@@ -25,6 +25,10 @@ class RentalsController < ApplicationController
 		device = Device.find_by_name(params[:ipad_name])
 		device = Device.first(:order => "RANDOM()") if device.nil?
 		location = device.location
+		notifications = {}
+		location.notifications.each do |n|
+			notifications[n.message] = [n.hours_before_rental_ends, n.hour_on_last_day, n.url]
+		end
 		taxes = {}
 		location.taxes.each { |tax| taxes[tax.name] = tax.rate }
 		render :json => {
@@ -35,7 +39,8 @@ class RentalsController < ApplicationController
 			"publishable_key" => ENV['STRIPE_PUBLISHABLE_KEY'],
 			"taxes" => taxes,
 			"admin_password" => device.admin_password,
-			"terms_and_conditions" => KeyInput.last.terms_and_conditions
+			"terms_and_conditions" => KeyInput.last.terms_and_conditions,
+			"notifications" => notifications
 		}
 	end
 
