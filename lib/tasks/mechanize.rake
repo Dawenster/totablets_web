@@ -5,8 +5,8 @@ task :lock_app, [:device_name] => :environment do |t, args|
 	Rental.lock_app(args[:device_name])
 end
 
-task :unlock_app, [:device_name] => :environment do |t, args|
-	Rental.unlock_app(args[:device_name])
+task :unlock_app, [:device_name, :opts] => :environment do |t, args|
+	Rental.unlock_app(args[:device_name], args[:opts])
 end
 
 task :check_completed_rentals => :environment do

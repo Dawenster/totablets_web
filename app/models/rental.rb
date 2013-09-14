@@ -47,7 +47,7 @@ class Rental < ActiveRecord::Base
 		end
 	end
 
-	def self.unlock_app(device_name)
+	def self.unlock_app(device_name, opts={})
 		device = Device.find_by_name(device_name)
 
 		a = Mechanize.new
@@ -65,6 +65,19 @@ class Rental < ActiveRecord::Base
 				  form.checkbox_with(:id => "profile_applock_enabled").uncheck
 				  form["profile[applock][enabled]"] = false
 			  	form.checkbox_with(:id => "profile_proxy_enabled").uncheck
+			  	if opts[:restrict_content] == "yes"
+				  	form.checkbox_with(:id => "profile_restrictions_allow_explicit_content").uncheck
+				  	form.checkbox_with(:id => "profile_restrictions_allow_safari").uncheck
+				  	form["profile[restrictions][rating_movies]"] = "300"
+				  	form["profile[restrictions][rating_tv_shows]"] = "500"
+				  	form["profile[restrictions][rating_apps]"] = "300"
+				  else
+				  	form.checkbox_with(:id => "profile_restrictions_allow_explicit_content").check
+				  	form.checkbox_with(:id => "profile_restrictions_allow_safari").check
+				  	form["profile[restrictions][rating_movies]"] = "1000"
+				  	form["profile[restrictions][rating_tv_shows]"] = "1000"
+				  	form["profile[restrictions][rating_apps]"] = "1000"
+				  end
 			  	after_save_page = form.submit
 			  	puts after_save_page.body
 				end

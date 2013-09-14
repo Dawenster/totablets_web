@@ -139,7 +139,11 @@ class RentalsController < ApplicationController
 			puts "Created customer: #{totablets_customer.name} - #{totablets_customer.email}"
 		end
 
-		Rental.unlock_app(params["device_name"])
+		opts = {
+			:restrict_content => params["restrict_content"]
+		}
+
+		Rental.unlock_app(params["device_name"], opts)
 
 		render :json => {
 			:stripe_error => "None", 
@@ -202,11 +206,13 @@ class RentalsController < ApplicationController
 			Rental.stop_existing_rentals(device)
 			Rental.lock_app(device.name)
 		end
-		AdminAccess.create(
-			:device_name_during_access => device.name,
-			:location_during_access => "#{device.location.name}, #{device.location.city}",
-			:action => params["command"]
-		)
+		unless params["origin"] == "finish_rental"
+			AdminAccess.create(
+				:device_name_during_access => device.name,
+				:location_during_access => "#{device.location.name}, #{device.location.city}",
+				:action => params["command"]
+			)
+		end
 		render :json => { :command => params["command"] }
 	end
 end
