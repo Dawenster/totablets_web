@@ -40,6 +40,11 @@
 		.checkbox.inline
 			= f.collection_check_boxes :tax_ids, Tax.all, :id, :name
 
+		%label{ :for => "location_notification_id" }
+			%b Notification(s)
+		.checkbox.inline
+			= f.collection_check_boxes :notification_ids, Notification.all, :id, :message_and_time_in_words
+
 		.submit-button
 			%button.btn.btn-success{ :type => "submit" }
 				= "#{Location.find_by_id(@location.id) ? "Save" : "Create"}"

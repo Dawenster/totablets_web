@@ -7,6 +7,8 @@
 		%a{ :href => customers_path } Customers
 	%li{ :class => params[:controller] == "locations" ? "active" : nil }
 		%a{ :href => locations_path } Locations
+	%li{ :class => params[:controller] == "notifications" ? "active" : nil }
+		%a{ :href => notifications_path } Notifications
 	%li{ :class => params[:controller] == "devices" ? "active" : nil }
 		%a{ :href => devices_path } Devices
 	%li{ :class => params[:controller] == "taxes" ? "active" : nil }

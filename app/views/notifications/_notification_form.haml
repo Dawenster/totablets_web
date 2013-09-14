@@ -1,0 +1,30 @@
+%div{ :style => "margin-bottom: 15px;" }
+	%b
+		*Note: set only one of either 'hours before rental ends' or 'hour on last day'
+
+= form_for @notification do |f|
+	%fieldset		
+		.form-group
+			%label{ :for => "notification_message" }
+				%b Message
+			= f.text_area :message, :value => @notification.message, :class => "form-control", :style => "width: 400px;", :rows => 5
+
+		.form-group.input-append
+			%label{ :for => "notification_hours_before_rental_ends" }
+				%b Hours before rental ends
+			= f.text_field :hours_before_rental_ends, :value => @notification.hours_before_rental_ends, :class => "form-control input-mini", :style => "text-align:right;"
+			%span.add-on hour(s)
+
+		%div
+			.form-group.input-append
+				%label{ :for => "notification_hour_on_last_day" }
+					%b Hour on last day
+				= f.text_field :hour_on_last_day, :value => @notification.hour_on_last_day, :class => "form-control input-mini", :style => "text-align:right;"
+				%span.add-on :00
+
+		.submit-button
+			%button.btn.btn-success{ :type => "submit" }
+				= "#{Notification.find_by_id(@notification.id) ? "Save" : "Create"}"
+
+			- if Notification.find_by_id(@notification.id)
+				= link_to "Delete", notification_path(@notification), :method => :delete, :confirm => "You know what you're doing right?  You're about to delete this notification...", :style => "margin-left: 10px;"
