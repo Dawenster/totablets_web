@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130914053542) do
+ActiveRecord::Schema.define(:version => 20130914220438) do
 
   create_table "admin_accesses", :force => true do |t|
     t.string   "device_name_during_access"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(:version => 20130914053542) do
     t.integer  "hour_on_last_day"
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
+    t.string   "url"
   end
 
   create_table "pre_auths", :force => true do |t|

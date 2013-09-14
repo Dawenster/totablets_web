@@ -1,5 +1,5 @@
 class Notification < ActiveRecord::Base
-	attr_accessible :message, :hours_before_rental_ends, :hour_on_last_day, :location_ids
+	attr_accessible :message, :hours_before_rental_ends, :hour_on_last_day, :location_ids, :url
 
 	has_and_belongs_to_many :locations
 
@@ -15,8 +15,8 @@ class Notification < ActiveRecord::Base
 	end
 
 	def legitimate_hours_before_rental_ends
-		if hours_before_rental_ends && hours_before_rental_ends < 0
-			errors.add(:hours_before_rental_ends, "need to be greater than 0")
+		if (hours_before_rental_ends && hours_before_rental_ends < 0) || hours_before_rental_ends != 99
+			errors.add(:hours_before_rental_ends, "need to be greater than 0 or equal 99")
 		end
 	end
 

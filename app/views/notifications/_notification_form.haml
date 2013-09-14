@@ -1,6 +1,6 @@
 %div{ :style => "margin-bottom: 15px;" }
 	%b
-		*Note: set only one of either 'hours before rental ends' or 'hour on last day'
+		*Note: set only one of either 'hours before rental ends' or 'hour on last day'.  Leave URL blank if not sending the user to a specific URL.  Put 99 as the 'Hours before rental ends' if you want to demo this notification - it will fire 10 seconds after the 60 second countdown.
 
 = form_for @notification do |f|
 	%fieldset		
@@ -21,6 +21,11 @@
 					%b Hour on last day
 				= f.text_field :hour_on_last_day, :value => @notification.hour_on_last_day, :class => "form-control input-mini", :style => "text-align:right;"
 				%span.add-on :00
+
+		.form-group
+			%label{ :for => "notification_url" }
+				%b URL
+			= f.text_field :url, :value => @notification.url, :class => "form-control"
 
 		%label{ :for => "notification_location_id" }
 			%b Location(s)
