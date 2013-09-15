@@ -7,6 +7,6 @@ class OverdueMailer < ActionMailer::Base
     @device = @rental.device
     @location = @rental.location
 
-    mail(to: ["dstwen@gmail.com"], subject: "OVERDUE RENTAL @ #{@location.name}")
+    mail(to: ["dstwen@gmail.com", "keith.agnew3@gmail.com"], subject: "OVERDUE RENTAL @ #{@location.name}")
   end
 end
