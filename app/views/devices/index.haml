@@ -20,7 +20,7 @@
 						%th Device type
 						%th Location
 						%th Profile value
-						%th Admin password
+						%th Type
 
 					- @devices.each do |device|
 						%tr
@@ -34,4 +34,4 @@
 							%td
 								= device.profile_value
 							%td
-								= device.admin_password
+								= device.demo ? "Demo" : "Live"

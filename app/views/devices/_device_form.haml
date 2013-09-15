@@ -25,6 +25,11 @@
 				%b Admin password
 			= f.text_field :admin_password, :value => @device.admin_password, :class => "form-control"
 
+		.form-group
+			%label{ :for => "device_demo" }
+				%b Type
+			= f.select :demo, ["Live", "Demo"], :selected => @device.demo ? 'Demo' : 'Live'
+
 		.submit-button
 			%button.btn.btn-success{ :type => "submit" }
 				= "#{Device.find_by_id(@device.id) ? "Save" : "Create"}"

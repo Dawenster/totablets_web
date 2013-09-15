@@ -2,7 +2,11 @@ class RentalsController < ApplicationController
 	http_basic_authenticate_with :name => ENV['ADMIN_NAME'], :password => ENV['ADMIN_PASSWORD'], :only => [:index, :show]
 
 	def index
-		@rentals = Rental.order("start_date DESC").paginate(page: params[:page], :per_page => 25)
+		if params[:filter].nil? || params[:filter] == "live"
+			@rentals = Rental.where(:demo => false).order("start_date DESC").paginate(page: params[:page], :per_page => 25)
+		else
+			@rentals = Rental.where(:demo => true).order("start_date DESC").paginate(page: params[:page], :per_page => 25)
+		end
 	end
 
 	def show
@@ -24,6 +28,13 @@ class RentalsController < ApplicationController
 	def location_info
 		device = Device.find_by_name(params[:ipad_name])
 		device = Device.first(:order => "RANDOM()") if device.nil?
+		
+		if device.demo
+			publishable_key = ENV['STRIPE_PUBLISHABLE_KEY']
+		else
+			publishable_key = ENV['STRIPE_LIVE_PUBLISHABLE_KEY']
+		end
+
 		location = device.location
 		notifications = {}
 		location.notifications.each do |n|
@@ -36,7 +47,7 @@ class RentalsController < ApplicationController
 			"currency" => location.currency,
 			"rental_fee" => KeyInput.last.rate,
 			"pre_auth_amount" => KeyInput.last.pre_auth_amount,
-			"publishable_key" => ENV['STRIPE_PUBLISHABLE_KEY'],
+			"publishable_key" => publishable_key,
 			"taxes" => taxes,
 			"admin_password" => device.admin_password,
 			"terms_and_conditions" => KeyInput.last.terms_and_conditions,
@@ -45,7 +56,12 @@ class RentalsController < ApplicationController
 	end
 
 	def create
-		Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+		device = Device.find_by_name(params["device_name"])
+		if device.demo
+			Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+		else
+			Stripe.api_key = ENV['STRIPE_LIVE_SECRET_KEY']
+		end
 
 		# Get the credit card details submitted by the form
 		token = params[:stripe_token]
@@ -184,7 +200,8 @@ class RentalsController < ApplicationController
 	      :customer => totablets_customer,
 	      :location => location,
 				:device => device,
-				:terms_and_conditions => params["terms_and_conditions"]
+				:terms_and_conditions => params["terms_and_conditions"],
+				:demo => device.demo
 			)
 
 			PreAuth.create(
@@ -211,7 +228,11 @@ class RentalsController < ApplicationController
 			Rental.stop_existing_rentals(device)
 			Rental.lock_app(device.name)
 		end
-		unless params["origin"] == "finish_rental"
+		if params["origin"] == "finish_rental"
+			device.rentals.each do |rental|
+				rental.update_attributes(:returned => true)
+			end
+		else
 			AdminAccess.create(
 				:device_name_during_access => device.name,
 				:location_during_access => "#{device.location.name}, #{device.location.city}",

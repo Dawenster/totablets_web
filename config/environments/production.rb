@@ -67,4 +67,18 @@ Totablets::Application.configure do
 
   # Force SSL in production
   config.force_ssl = true
+
+  # Email settings
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.live.com',
+    port: 587,
+    domain: 'totablets.com',
+    user_name: 'info@totablets.com',
+    password: 'Asdf1234',
+    authentication: 'plain',
+    enable_starttls_auto: true
+  }
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
 end

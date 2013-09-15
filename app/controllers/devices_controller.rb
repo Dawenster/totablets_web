@@ -10,6 +10,7 @@ class DevicesController < ApplicationController
 	end
 
 	def create
+		params[:device][:demo] = params[:device][:demo] == "Demo" ? true : false
 		device = Device.new(params[:device])
 		if device.save
 			flash[:success] = "#{device.name} has been successfully created."
@@ -27,6 +28,7 @@ class DevicesController < ApplicationController
 
 	def update
 		device = Device.find(params[:id])
+		params[:device][:demo] = params[:device][:demo] == "Demo" ? true : false
 		device.assign_attributes(params[:device])
 		if device.save
 			flash[:success] = "#{device.name} has been updated."

@@ -14,6 +14,19 @@
 
 				%table.table.table-striped
 					%tr
+						- if @rental.finished && @rental.returned
+							- status = "Returned"
+						- elsif @rental.finished && !@rental.returned
+							- status = "OVERDUE!"
+						- else
+							- status = "Still out"
+								
+						%td{ :style => "#{status == 'OVERDUE!' ? 'background-color:yellow;' : ''}" }
+							%b Status:
+						%td{ :style => "#{status == 'OVERDUE!' ? 'background-color:yellow;' : ''}" }
+							= status
+
+					%tr
 						%td
 							%b Customer:
 						%td

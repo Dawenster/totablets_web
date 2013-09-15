@@ -1,7 +1,7 @@
 class Rental < ActiveRecord::Base
 	attr_accessible :device_name, :location_detail, :days, :start_date, :end_date, :rate, :subtotal, :tax_rate, :tax_amount,
 									:grand_total, :currency, :customer, :location, :device, :device_id, :finished, :stripe_rental_charge_id,
-									:terms_and_conditions
+									:terms_and_conditions, :demo, :returned
 
 	belongs_to :customer
 	belongs_to :location

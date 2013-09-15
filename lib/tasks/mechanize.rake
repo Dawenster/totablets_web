@@ -14,5 +14,13 @@ task :check_completed_rentals => :environment do
 	rentals.each do |rental|
 		Rental.lock_app(rental.device.name)
 		rental.update_attributes(:finished => true)
+		OverdueMailer.rental_overdue(rental.id).deliver unless rental.returned
+	end
+end
+
+task :check_overdue => :environment do
+	rentals = Rental.where(:finished => true, :returned => false)
+	rentals.each do |rental|
+		OverdueMailer.rental_overdue(rental.id).deliver unless rental.returned
 	end
 end

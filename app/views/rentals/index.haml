@@ -11,40 +11,55 @@
 
 				%h3.admin-title All rentals
 
-				.add-item
-					* = Current rental
+				.filters{:style => "clear:both;"}
+					.filter-by{:style => "float:left;"}
+						%h4 Filter by:
+
+					.filters{:style => "float:left;margin-top:5px;margin-left:10px;"}
+						%ul.nav.nav-pills
+							%li{:class => params[:filter] == "live" || params[:filter] == nil || params[:filter].blank? ? "active" : nil}
+								%a{:href => "#{rentals_path(:filter => 'live')}"} Live
+							%li{:class => params[:filter] == "demo" ? "active" : nil}
+								%a{:href => "#{rentals_path(:filter => 'demo')}"} Demo
+
+					.add-item{:style => "line-height:50px;"}
+						* = Current rental
 
 				%table.table.table-striped
 					%tr
 						%th ID
 						%th Device
 						%th Location
-						%th Start
-						%th End
-						%th Days
+						%th Dates (days)
 						%th Total
+						%th Status
 
 					- @rentals.each do |rental|
+						- if rental.finished && rental.returned
+							- status = "Returned"
+						- elsif rental.finished && !rental.returned
+							- status = "OVERDUE!"
+						- else
+							- status = "Still out"
+
 						%tr
-							%td
+							%td{ :style => "#{status == 'OVERDUE!' ? 'background-color:yellow;' : ''}" }
 								%a{ :href => rental_path(rental) }
 									= rental.id
-							%td
+							%td{ :style => "#{status == 'OVERDUE!' ? 'background-color:yellow;' : ''}" }
 								%a{ :href => edit_device_path(rental.device) }
-									= "#{rental.device.name}#{'*' unless rental.finished}"
-							%td
+									= "#{rental.device.name}#{'*' unless rental.returned}"
+							%td{ :style => "#{status == 'OVERDUE!' ? 'background-color:yellow;' : ''}" }
 								- if rental.location
 									%a{ :href => edit_location_path(rental.location) }
 										= "#{rental.location.name}, #{rental.location.city}"
 								- else
 									Deleted
-							%td
-								= rental.start_date.strftime("%a, %b %d")
-							%td
-								= rental.end_date.strftime("%a, %b %d")
-							%td
-								= rental.days
-							%td
+							%td{ :style => "#{status == 'OVERDUE!' ? 'background-color:yellow;' : ''}" }
+								= "#{rental.start_date.strftime("%b %d")} - #{rental.end_date.strftime("%b %d")} (#{rental.days})"
+							%td{ :style => "#{status == 'OVERDUE!' ? 'background-color:yellow;' : ''}" }
 								= "#{number_to_currency(rental.grand_total / 100.0)} #{rental.currency}"
+							%td{ :style => "#{status == 'OVERDUE!' ? 'background-color:yellow;' : ''}" }
+								= status
 
 				= will_paginate @rentals, :params => { :controller => "rentals", :action => "index" }

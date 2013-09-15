@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>YO.  Some fucker's trying to steal an iPad.</h1>
+    <h2>Details:</h2>
+    <p>
+      <%= "Customer: #{@customer.name}" %>
+    </p>
+    <p>
+      <%= "Device: #{@device.name}" %>
+    </p>
+    <p>
+      <%= "Location: #{@location.name}" %>
+    </p>
+    <p>
+      <%= "Admin panel link: #{rental_url(@rental)}" %>
+    </p>
+  </body>
+</html>
