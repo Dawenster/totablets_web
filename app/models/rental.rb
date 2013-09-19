@@ -88,7 +88,7 @@ class Rental < ActiveRecord::Base
 	def self.stop_existing_rentals(device)
 		ongoing_rentals = device.rentals.select{ |rental| rental.finished.nil? }
 		ongoing_rentals.each do |rental|
-			rental.update_attributes(:end_date => Time.now, :finished => true)
+			rental.update_attributes(:end_date => Time.now, :finished => true, :returned => true)
 		end
 	end
 end
