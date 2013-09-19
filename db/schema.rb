@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130915194509) do
+ActiveRecord::Schema.define(:version => 20130919054140) do
 
   create_table "admin_accesses", :force => true do |t|
     t.string   "device_name_during_access"
@@ -47,6 +47,8 @@ ActiveRecord::Schema.define(:version => 20130915194509) do
     t.text     "terms_and_conditions"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
+    t.string   "apple_id_password"
+    t.string   "warning"
   end
 
   create_table "locations", :force => true do |t|

@@ -28,6 +28,16 @@
 							= f.text_field :pre_auth_amount, :value => "%.2f" % (@key_input.pre_auth_amount / 100.0), :class => "form-control"
 
 						.form-group
+							%label{ :for => "key_input_warning" }
+								%b Black screen warning about how we delete apps
+							= f.text_area :warning, :value => @key_input.warning, :class => "form-control", :style => "width: 95%;"
+
+						.form-group
+							%label{ :for => "key_input_apple_id_password" }
+								%b Apple ID password (for info@totablets.com)
+							= f.text_field :apple_id_password, :value => @key_input.apple_id_password, :class => "form-control"
+
+						.form-group
 							%label{ :for => "key_input_terms_and_conditions" }
 								%b Terms and conditions
 							= f.text_area :terms_and_conditions, :value => @key_input.terms_and_conditions, :class => "form-control", :style => "width: 95%;"

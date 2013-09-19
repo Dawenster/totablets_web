@@ -21,6 +21,14 @@
 				%p
 					= "#{number_to_currency(@key_input.pre_auth_amount / 100.0)}"
 
+				%h4 Black screen warning about how we delete apps
+				%p
+					= simple_format(@key_input.warning)
+
+				%h4 Apple ID password (for info@totablets.com):
+				%p
+					= @key_input.apple_id_password
+
 				%h4
 					= "Terms and conditions (last updated on #{@key_input.updated_at.strftime('%A, %b %d, %Y')})"
 				%p

@@ -51,7 +51,9 @@ class RentalsController < ApplicationController
 			"taxes" => taxes,
 			"admin_password" => device.admin_password,
 			"terms_and_conditions" => KeyInput.last.terms_and_conditions,
-			"notifications" => notifications
+			"notifications" => notifications,
+			"apple_id_password" => KeyInput.last.apple_id_password,
+			"warning" => KeyInput.last.warning
 		}
 	end
 
