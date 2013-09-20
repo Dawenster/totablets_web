@@ -56,7 +56,7 @@
 								- else
 									Deleted
 							%td{ :style => "#{status == 'OVERDUE!' ? 'background-color:yellow;' : ''}" }
-								= "#{rental.start_date.strftime("%b %d")} - #{rental.end_date.strftime("%b %d")} (#{rental.days})"
+								= "#{(rental.start_date + @time_differences[rental.location.timezone].hours).strftime("%b %d")} - #{(rental.end_date + @time_differences[rental.location.timezone].hours).strftime("%b %d")} (#{rental.days})"
 							%td{ :style => "#{status == 'OVERDUE!' ? 'background-color:yellow;' : ''}" }
 								= "#{number_to_currency(rental.grand_total / 100.0)} #{rental.currency}"
 							%td{ :style => "#{status == 'OVERDUE!' ? 'background-color:yellow;' : ''}" }

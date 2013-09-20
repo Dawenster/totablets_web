@@ -2,6 +2,15 @@ class RentalsController < ApplicationController
 	http_basic_authenticate_with :name => ENV['ADMIN_NAME'], :password => ENV['ADMIN_PASSWORD'], :only => [:index, :show]
 
 	def index
+		@time_differences = {
+			"PST" => 0,
+			"MST" => 1,
+			"CST" => 2,
+			"EST" => 3
+		}
+
+		Time.zone = "Pacific Time (US & Canada)"
+
 		if params[:filter].nil? || params[:filter] == "live"
 			@rentals = Rental.where(:demo => false).order("start_date DESC").paginate(page: params[:page], :per_page => 25)
 		else
@@ -20,9 +29,6 @@ class RentalsController < ApplicationController
 		@hour_differential = time_differences[@rental.location.timezone]
 
 		Time.zone = "Pacific Time (US & Canada)"
-		# in_dst = Time.zone.local(Time.now.year, Time.now.month, Time.now.day, Time.now.hour, Time.now.min, 0).dst?
-
-		# @hour_differential -= 1 if in_dst
 	end
 
 	def location_info
@@ -230,11 +236,7 @@ class RentalsController < ApplicationController
 			Rental.stop_existing_rentals(device)
 			Rental.lock_app(device.name)
 		end
-		if params["origin"] == "finish_rental"
-			device.rentals.each do |rental|
-				rental.update_attributes(:returned => true)
-			end
-		else
+		unless params["origin"] == "finish_rental"
 			AdminAccess.create(
 				:device_name_during_access => device.name,
 				:location_during_access => "#{device.location.name}, #{device.location.city}",
