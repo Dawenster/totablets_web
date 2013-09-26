@@ -1,5 +1,5 @@
 class Device < ActiveRecord::Base
-	attr_accessible :name, :profile_value, :device_type, :location, :location_id, :admin_password, :demo
+	attr_accessible :name, :profile_value, :device_type, :location, :location_id, :admin_password, :demo, :meraki_client_id
 
 	has_many :rentals
 	belongs_to :location
@@ -7,4 +7,5 @@ class Device < ActiveRecord::Base
 	validates :name, :presence => true
 	validates :profile_value, :presence => true
 	validates :device_type, :presence => true
+	validates :meraki_client_id, :presence => true
 end
