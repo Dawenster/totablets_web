@@ -27,7 +27,9 @@ class Notification < ActiveRecord::Base
 	end
 
 	def display_time_in_words
-		if hours_before_rental_ends
+		if hours_before_rental_ends && hours_before_rental_ends == 99
+			return "1 minute after unlock"
+		elsif hours_before_rental_ends
 			return "#{hours_before_rental_ends} hour#{'s' if hours_before_rental_ends != 1} before rental ends"
 		elsif hour_on_last_day
 			return "#{hour_on_last_day}:00 on the last day of the rental"
