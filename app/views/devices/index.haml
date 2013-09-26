@@ -19,7 +19,7 @@
 						%th Name
 						%th Device type
 						%th Location
-						%th Profile value
+						%th Admin password
 						%th Type
 
 					- @devices.each do |device|
@@ -32,6 +32,6 @@
 							%td
 								= device.location.try(:name) ? device.location.name : "Dev Machine"
 							%td
-								= device.profile_value
+								= device.admin_password
 							%td
 								= device.demo ? "Demo" : "Live"

@@ -21,6 +21,11 @@
 			= f.text_field :profile_value, :value => @device.profile_value, :class => "form-control"
 
 		.form-group
+			%label{ :for => "device_meraki_client_id" }
+				%b Meraki client ID
+			= f.text_field :meraki_client_id, :value => @device.meraki_client_id, :class => "form-control"
+
+		.form-group
 			%label{ :for => "device_admin_password" }
 				%b Admin password
 			= f.text_field :admin_password, :value => @device.admin_password, :class => "form-control"
