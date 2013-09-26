@@ -245,6 +245,11 @@ class RentalsController < ApplicationController
 		end
 		render :json => { :command => params["command"] }
 	end
+
+	def install_apps
+		Rental.install_apps(params["ipad_name"])
+		render :json => { :message => "success" }
+	end
 end
 
 

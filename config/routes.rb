@@ -21,6 +21,7 @@ Totablets::Application.routes.draw do
   post "/location_info" => "rentals#location_info", :as => :location_info
   post "/capture_customer_data" => "rentals#capture_customer_data", :as => :capture_customer_data
   post "/admin_command" => "rentals#admin_command", :as => :admin_command
+  post "/install_apps" => "rentals#install_apps", :as => :install_apps
 
   mount Resque::Server.new, :at => "/resque"
 
