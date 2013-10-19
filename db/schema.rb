@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130926024445) do
+ActiveRecord::Schema.define(:version => 20131015055746) do
 
   create_table "admin_accesses", :force => true do |t|
     t.string   "device_name_during_access"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20130926024445) do
     t.string   "admin_password"
     t.boolean  "demo",             :default => true
     t.string   "meraki_client_id"
+    t.string   "udid"
   end
 
   create_table "key_inputs", :force => true do |t|
