@@ -190,6 +190,7 @@ DEPENDENCIES
   pry
   rails (= 3.2.13)
   resque
+  rest-client
   sass-rails (~> 3.2.3)
   simple_form
   stripe!
