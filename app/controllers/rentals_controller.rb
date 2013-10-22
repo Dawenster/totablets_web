@@ -172,7 +172,11 @@ class RentalsController < ApplicationController
 			:restrict_content => params["restrict_content"]
 		}
 
-		Rental.unlock_app(params["device_name"], opts)
+		if params["device_name"] == "iPad Alpha" || params["device_name"] == "iPad Simulator"
+			Rental.manage_single_app_profile("remove", device.id)
+		else
+			Rental.unlock_app(params["device_name"], opts)
+		end
 
 		render :json => {
 			:stripe_error => "None", 
@@ -231,10 +235,18 @@ class RentalsController < ApplicationController
 	def admin_command
 		device = Device.find_by_name(params["ipad_name"])
 		if params["command"] == "unlock"
-			Rental.unlock_app(device.name)
+			if params["ipad_name"] == "iPad Alpha" || params["ipad_name"] == "iPad Simulator"
+				Rental.manage_single_app_profile("remove", device.id)
+			else
+				Rental.unlock_app(device.name)
+			end
 		else
-			Rental.stop_existing_rentals(device)
-			Rental.lock_app(device.name)
+			if params["ipad_name"] == "iPad Alpha" || params["ipad_name"] == "iPad Simulator"
+				Rental.manage_single_app_profile("install", device.id)
+			else
+				Rental.stop_existing_rentals(device)
+				Rental.lock_app(device.name)
+			end
 		end
 		unless params["origin"] == "finish_rental"
 			AdminAccess.create(

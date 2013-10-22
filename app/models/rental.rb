@@ -1,4 +1,6 @@
 class Rental < ActiveRecord::Base
+	require 'base64'
+
 	attr_accessible :device_name, :location_detail, :days, :start_date, :end_date, :rate, :subtotal, :tax_rate, :tax_amount,
 									:grand_total, :currency, :customer, :location, :device, :device_id, :finished, :stripe_rental_charge_id,
 									:terms_and_conditions, :demo, :returned
@@ -185,6 +187,30 @@ class Rental < ActiveRecord::Base
 		# 	# Installing Skype
 		# 	a.post("#{install_app_post_path}?app=#{skype_app_id}", { "app" => skype_app_id }, headers)
 		# end
+	end
+
+	def self.manage_single_app_profile(command, device_id)
+		device = Device.find(device_id)
+		payload = { "Udid" => device.udid }.to_json
+		auth = 'Basic ' + Base64.encode64( "david@totablets.com:Asdf1234" ).chomp
+		header = { :content_type => "application/json", "aw-tenant-code" => "1ET3S4BQAAG5A4PQCFQA", :authorization => auth }
+    response = RestClient.post("https://cn239.awmdm.com/API/v1/mdm/profiles/734/#{command}", payload, header)
+
+		apps_requiring_login = [274, 275, 276, 277, 287] # Gmail, Facebook, Twitter, Skype, LinkedIn
+		apps_requiring_login.each do |app_id|
+			if command == "remove" # If removing single app mode, install apps
+				Rental.manage_app("install", app_id)
+			else # If installing single app mode, delete apps
+				Rental.manage_app("uninstall", app_id)
+			end
+		end
+	end
+
+	def self.manage_app(command, app_id)
+		payload = { "Udid" => "DDD492B588A9590C0BB1F396E4576A81DD26D57F" }.to_json
+		auth = 'Basic ' + Base64.encode64( "david@totablets.com:Asdf1234" ).chomp
+		header = { :content_type => "application/json", "aw-tenant-code" => "1ET3S4BQAAG5A4PQCFQA", :authorization => auth }
+		response = RestClient.post("https://cn239.awmdm.com/API/v1/mam/apps/public/#{app_id}/#{command}", payload, header)
 	end
 
 	def self.stop_existing_rentals(device)
