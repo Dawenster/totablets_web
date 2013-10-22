@@ -194,7 +194,7 @@ class Rental < ActiveRecord::Base
 		payload = { "Udid" => device.udid }.to_json
 		auth = 'Basic ' + Base64.encode64( "david@totablets.com:Asdf1234" ).chomp
 		header = { :content_type => "application/json", "aw-tenant-code" => "1ET3S4BQAAG5A4PQCFQA", :authorization => auth }
-		response = RestClient.	post "https://cn239.awmdm.com/API/v1/mdm/profiles/734/#{command}", payload, header
+    response = RestClient.post("https://cn239.awmdm.com/API/v1/mdm/profiles/734/#{command}", payload, header)
 
 		apps_requiring_login = [274, 275, 276, 277, 287] # Gmail, Facebook, Twitter, Skype, LinkedIn
 		apps_requiring_login.each do |app_id|
@@ -210,7 +210,7 @@ class Rental < ActiveRecord::Base
 		payload = { "Udid" => "DDD492B588A9590C0BB1F396E4576A81DD26D57F" }.to_json
 		auth = 'Basic ' + Base64.encode64( "david@totablets.com:Asdf1234" ).chomp
 		header = { :content_type => "application/json", "aw-tenant-code" => "1ET3S4BQAAG5A4PQCFQA", :authorization => auth }
-		response = RestClient.post "https://cn239.awmdm.com/API/v1/mam/apps/public/#{app_id}/#{command}", payload, header
+		response = RestClient.post("https://cn239.awmdm.com/API/v1/mam/apps/public/#{app_id}/#{command}", payload, header)
 	end
 
 	def self.stop_existing_rentals(device)
