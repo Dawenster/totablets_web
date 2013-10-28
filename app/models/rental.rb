@@ -197,15 +197,26 @@ class Rental < ActiveRecord::Base
 		eos
 		auth = "Basic ZGF2aWRAdG90YWJsZXRzLmNvbTpBc2RmMTIzNA=="
 		header = { :content_type => :xml, "aw-tenant-code" => "1LSVS4BQAAG5A4TQCFQA", :authorization => auth, :accept => :xml }
-    response = RestClient.post("https://cn239.awmdm.com/API/v1/mdm/profiles/734/#{command}", payload, header)
 
+		# Order matters when installing / uninstalling apps
+		if command == "remove"
+	    response = RestClient.post("https://cn239.awmdm.com/API/v1/mdm/profiles/734/#{command}", payload, header)
+			Rental.manage_apps(command, payload, header)
+		else
+			Rental.manage_apps(command, payload, header)
+			response = RestClient.post("https://cn239.awmdm.com/API/v1/mdm/profiles/734/#{command}", payload, header)
+		end
+	end
+
+	def self.manage_apps(command, payload, header)
 		apps_requiring_login = [274, 275, 276, 277, 278] # Gmail, Facebook, Twitter, Skype, LinkedIn
 		apps_requiring_login.each do |app_id|
-			sleep 1
 			if command == "remove" # If removing single app mode, install apps
+				sleep 1
 				Rental.manage_app("install", app_id, payload, header)
 			else # If installing single app mode, delete apps
 				Rental.manage_app("uninstall", app_id, payload, header)
+				sleep 1
 			end
 		end
 	end
