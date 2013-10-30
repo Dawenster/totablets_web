@@ -172,7 +172,7 @@ class RentalsController < ApplicationController
 			:restrict_content => params["restrict_content"]
 		}
 
-		if params["device_name"] == "iPad Alpha" || params["device_name"] == "iPad Simulator"
+		if params["device_name"] == "iPad Alpha" || params["ipad_name"] == "iPad Bravo" || params["device_name"] == "iPad Simulator"
 			Rental.manage_single_app_profile("remove", device.id)
 		else
 			Rental.unlock_app(params["device_name"], opts)
