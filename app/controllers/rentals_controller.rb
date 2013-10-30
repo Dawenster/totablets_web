@@ -235,13 +235,13 @@ class RentalsController < ApplicationController
 	def admin_command
 		device = Device.find_by_name(params["ipad_name"])
 		if params["command"] == "unlock"
-			if params["ipad_name"] == "iPad Alpha" || params["ipad_name"] == "iPad Simulator"
+			if params["ipad_name"] == "iPad Alpha" || params["ipad_name"] == "iPad Bravo" || params["ipad_name"] == "iPad Simulator"
 				Rental.manage_single_app_profile("remove", device.id)
 			else
 				Rental.unlock_app(device.name)
 			end
 		else
-			if params["ipad_name"] == "iPad Alpha" || params["ipad_name"] == "iPad Simulator"
+			if params["ipad_name"] == "iPad Alpha" || params["ipad_name"] == "iPad Bravo" || params["ipad_name"] == "iPad Simulator"
 				Rental.manage_single_app_profile("install", device.id)
 			else
 				Rental.stop_existing_rentals(device)
