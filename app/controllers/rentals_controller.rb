@@ -241,10 +241,10 @@ class RentalsController < ApplicationController
 				Rental.unlock_app(device.name)
 			end
 		else
+			Rental.stop_existing_rentals(device)
 			if params["ipad_name"] == "iPad Alpha" || params["ipad_name"] == "iPad Bravo" || params["ipad_name"] == "iPad Simulator"
 				Rental.manage_single_app_profile("install", device.id)
 			else
-				Rental.stop_existing_rentals(device)
 				Rental.lock_app(device.name)
 			end
 		end
