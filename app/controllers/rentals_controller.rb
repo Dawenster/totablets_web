@@ -172,7 +172,7 @@ class RentalsController < ApplicationController
 			:restrict_content => params["restrict_content"]
 		}
 
-		air_watch_devices = ["iPad Simulator", "iPad Alpha", "iPad Bravo", "Mini Annie"]
+		air_watch_devices = ["iPad Simulator", "iPad Alpha", "iPad Bravo", "Mini Annie", "iPad C205", "iPad C206", "iPad C207", "iPad C208"]
 
 		if air_watch_devices.include?(params["device_name"])
 			Rental.manage_single_app_profile("remove", device.id)
@@ -235,7 +235,7 @@ class RentalsController < ApplicationController
 	end
 
 	def admin_command
-		air_watch_devices = ["iPad Simulator", "iPad Alpha", "iPad Bravo", "Mini Annie"]
+		air_watch_devices = ["iPad Simulator", "iPad Alpha", "iPad Bravo", "Mini Annie", "iPad C205", "iPad C206", "iPad C207", "iPad C208"]
 		device = Device.find_by_name(params["ipad_name"])
 		if params["command"] == "unlock"
 			if air_watch_devices.include?(params["ipad_name"])
