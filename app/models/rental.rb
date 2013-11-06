@@ -204,6 +204,8 @@ class Rental < ActiveRecord::Base
 			Rental.manage_apps(command, payload, header)
 		else
 			Rental.manage_apps(command, payload, header)
+			Rental.clear_passcode(device, header)
+			sleep 1
 			response = RestClient.post("https://cn239.awmdm.com/API/v1/mdm/profiles/734/#{command}", payload, header)
 		end
 	end
@@ -230,5 +232,9 @@ class Rental < ActiveRecord::Base
 		ongoing_rentals.each do |rental|
 			rental.update_attributes(:end_date => Time.now, :finished => true, :returned => true)
 		end
+	end
+
+	def self.clear_passcode(device, header)
+		response = RestClient.post("https://cn239.awmdm.com/API/v1/mdm/devices/udid/#{device.udid}/clearpasscode", {}, header)
 	end
 end
