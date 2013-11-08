@@ -188,7 +188,7 @@ class Rental < ActiveRecord::Base
 		# end
 	end
 
-	def self.manage_single_app_profile(command, device_id)
+	def self.manage_single_app_profile(command, device_id, opts)
 		device = Device.find(device_id)
 		payload = <<-eos
 			<DeviceInfo xmlns="http://www.air-watch.com/servicemodel/resources">
@@ -200,31 +200,49 @@ class Rental < ActiveRecord::Base
 
 		# Order matters when installing / uninstalling apps
 		if command == "remove"
-	    response = RestClient.post("https://cn239.awmdm.com/API/v1/mdm/profiles/734/#{command}", payload, header)
-			Rental.manage_apps(command, payload, header)
+	    RestClient.post("https://cn239.awmdm.com/API/v1/mdm/profiles/734/#{command}", payload, header) if Rental.profile_installed?(device, header, 734)
+			Rental.manage_apps(device, command, payload, header)
+			sleep 1
+	    if opts[:restrict_content] == "yes"
+	    	# Install adult restriction profile
+		    RestClient.post("https://cn239.awmdm.com/API/v1/mdm/profiles/733/install", payload, header) unless Rental.profile_installed?(device, header, 733)
+		    sleep 1
+				# Install Mobicip
+				Rental.manage_app("install", 565, payload, header)
+			else
+				# Install Google Chrome
+				Rental.manage_app("install", 564, payload, header)
+			end
 		else
-			Rental.manage_apps(command, payload, header)
 			Rental.clear_passcode(device, header)
 			sleep 1
-			response = RestClient.post("https://cn239.awmdm.com/API/v1/mdm/profiles/734/#{command}", payload, header)
+			Rental.manage_apps(device, command, payload, header)
+			RestClient.post("https://cn239.awmdm.com/API/v1/mdm/profiles/734/#{command}", payload, header) unless Rental.profile_installed?(device, header, 734)
+			sleep 1
+			# Remove adult content profile if it is there
+			RestClient.post("https://cn239.awmdm.com/API/v1/mdm/profiles/733/remove", payload, header) if Rental.profile_installed?(device, header, 733)
+			sleep 1
+			# Remove either Chrome or Mobicip
+			Rental.manage_app("uninstall", 564, payload, header) if Rental.app_installed?(device, 564, header)
+			Rental.manage_app("uninstall", 565, payload, header) if Rental.app_installed?(device, 565, header)
 		end
 	end
 
-	def self.manage_apps(command, payload, header)
+	def self.manage_apps(device, command, payload, header)
 		apps_requiring_login = [274, 275, 276, 277, 278] # Gmail, Facebook, Twitter, Skype, LinkedIn
 		apps_requiring_login.each do |app_id|
 			if command == "remove" # If removing single app mode, install apps
 				sleep 1
-				Rental.manage_app("install", app_id, payload, header)
+				Rental.manage_app("install", app_id, payload, header) unless Rental.app_installed?(device, app_id, header)
 			else # If installing single app mode, delete apps
-				Rental.manage_app("uninstall", app_id, payload, header)
+				Rental.manage_app("uninstall", app_id, payload, header) if Rental.app_installed?(device, app_id, header)
 				sleep 1
 			end
 		end
 	end
 
 	def self.manage_app(command, app_id, payload, header)
-		response = RestClient.post("https://cn239.awmdm.com/API/v1/mam/apps/public/#{app_id}/#{command}", payload, header)
+		RestClient.post("https://cn239.awmdm.com/API/v1/mam/apps/public/#{app_id}/#{command}", payload, header)
 	end
 
 	def self.stop_existing_rentals(device)
@@ -235,6 +253,30 @@ class Rental < ActiveRecord::Base
 	end
 
 	def self.clear_passcode(device, header)
-		response = RestClient.post("https://cn239.awmdm.com/API/v1/mdm/devices/udid/#{device.udid}/clearpasscode", {}, header)
+		RestClient.post("https://cn239.awmdm.com/API/v1/mdm/devices/udid/#{device.udid}/clearpasscode", {}, header)
+	end
+
+	def self.profile_installed?(device, header, profile_id)
+		response = RestClient.get("https://cn239.awmdm.com/API/v1/mdm/devices/udid/#{device.udid}/profiles?page=0&pagesize=10", header)
+		response_hash = Hash.from_xml response
+		response_hash["DeviceProfileSearchResult"]["DeviceProfiles"].each do |profile|
+			next unless profile["Id"] == profile_id.to_s
+			if profile["Status"] == "confirmedinstall"
+				return true
+			end
+		end
+		return false
+	end
+
+	def self.app_installed?(device, app_id, header)
+		response = RestClient.get("https://cn239.awmdm.com/API/v1/mdm/devices/udid/#{device.udid}/apps?page=0&pagesize=200", header)
+		response_hash = Hash.from_xml response
+		response_hash["DeviceAppsResult"]["DeviceApps"].each do |profile|
+			next unless profile["Id"] == app_id.to_s
+			if profile["Status"] == "installed"
+				return true
+			end
+		end
+		return false
 	end
 end

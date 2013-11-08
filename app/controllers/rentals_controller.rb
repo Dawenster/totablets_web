@@ -175,7 +175,7 @@ class RentalsController < ApplicationController
 		air_watch_devices = ["iPad Simulator", "iPad Alpha", "iPad Bravo", "Mini Annie", "iPad C205", "iPad C206", "iPad C207", "iPad C208"]
 
 		if air_watch_devices.include?(params["device_name"])
-			Rental.manage_single_app_profile("remove", device.id)
+			Rental.manage_single_app_profile("remove", device.id, opts)
 		else
 			Rental.unlock_app(params["device_name"], opts)
 		end
@@ -239,14 +239,14 @@ class RentalsController < ApplicationController
 		device = Device.find_by_name(params["ipad_name"])
 		if params["command"] == "unlock"
 			if air_watch_devices.include?(params["ipad_name"])
-				Rental.manage_single_app_profile("remove", device.id)
+				Rental.manage_single_app_profile("remove", device.id, {})
 			else
 				Rental.unlock_app(device.name)
 			end
 		else
 			Rental.stop_existing_rentals(device)
 			if air_watch_devices.include?(params["ipad_name"])
-				Rental.manage_single_app_profile("install", device.id)
+				Rental.manage_single_app_profile("install", device.id, {})
 			else
 				Rental.lock_app(device.name)
 			end
