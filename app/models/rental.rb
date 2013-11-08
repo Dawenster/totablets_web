@@ -210,7 +210,7 @@ class Rental < ActiveRecord::Base
 				# Install Mobicip
 				# Rental.manage_app("install", 565, payload, header)
 			else
-				Install Google Chrome
+				# Install Google Chrome
 				Rental.manage_app("install", 564, payload, header)
 			end
 		else
