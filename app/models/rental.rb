@@ -206,12 +206,12 @@ class Rental < ActiveRecord::Base
 	    if opts[:restrict_content] == "yes"
 	    	# Install adult restriction profile
 		    RestClient.post("https://cn239.awmdm.com/API/v1/mdm/profiles/733/install", payload, header) unless Rental.profile_installed?(device, header, 733)
-		    sleep 1
+		    # sleep 1
 				# Install Mobicip
-				Rental.manage_app("install", 565, payload, header)
+				# Rental.manage_app("install", 565, payload, header)
 			else
 				# Install Google Chrome
-				Rental.manage_app("install", 564, payload, header)
+				# Rental.manage_app("install", 564, payload, header)
 			end
 		else
 			Rental.clear_passcode(device, header)
@@ -221,10 +221,10 @@ class Rental < ActiveRecord::Base
 			sleep 1
 			# Remove adult content profile if it is there
 			RestClient.post("https://cn239.awmdm.com/API/v1/mdm/profiles/733/remove", payload, header) if Rental.profile_installed?(device, header, 733)
-			sleep 1
+			# sleep 1
 			# Remove either Chrome or Mobicip
-			Rental.manage_app("uninstall", 564, payload, header) if Rental.app_installed?(device, 564, header)
-			Rental.manage_app("uninstall", 565, payload, header) if Rental.app_installed?(device, 565, header)
+			# Rental.manage_app("uninstall", 564, payload, header) if Rental.app_installed?(device, 564, header)
+			# Rental.manage_app("uninstall", 565, payload, header) if Rental.app_installed?(device, 565, header)
 		end
 	end
 
