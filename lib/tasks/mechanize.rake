@@ -10,15 +10,10 @@ task :unlock_app, [:device_name, :opts] => :environment do |t, args|
 end
 
 task :check_completed_rentals => :environment do
-	air_watch_devices = ["iPad Simulator", "iPad Alpha", "iPad Bravo", "Mini Annie", "iPad C205", "iPad C206", "iPad C207", "iPad C208"]
 	rentals = Rental.where("end_date < '#{Time.now.utc}'").where("finished is null")
 	rentals.each do |rental|
 		device = rental.device
-		if air_watch_devices.include?(device.name)
-			Rental.manage_single_app_profile("install", device.id, {})
-		else
-			Rental.lock_app(device.name)
-		end
+		Rental.manage_single_app_profile("install", device.id, {})
 		rental.update_attributes(:finished => true)
 	end
 

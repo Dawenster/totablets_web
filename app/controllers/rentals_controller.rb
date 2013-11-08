@@ -172,13 +172,7 @@ class RentalsController < ApplicationController
 			:restrict_content => params["restrict_content"]
 		}
 
-		air_watch_devices = ["iPad Simulator", "iPad Alpha", "iPad Bravo", "Mini Annie", "iPad C205", "iPad C206", "iPad C207", "iPad C208"]
-
-		if air_watch_devices.include?(params["device_name"])
-			Rental.manage_single_app_profile("remove", device.id, opts)
-		else
-			Rental.unlock_app(params["device_name"], opts)
-		end
+		Rental.manage_single_app_profile("remove", device.id, opts)
 
 		render :json => {
 			:stripe_error => "None", 
@@ -235,21 +229,12 @@ class RentalsController < ApplicationController
 	end
 
 	def admin_command
-		air_watch_devices = ["iPad Simulator", "iPad Alpha", "iPad Bravo", "Mini Annie", "iPad C205", "iPad C206", "iPad C207", "iPad C208"]
 		device = Device.find_by_name(params["ipad_name"])
 		if params["command"] == "unlock"
-			if air_watch_devices.include?(params["ipad_name"])
-				Rental.manage_single_app_profile("remove", device.id, {})
-			else
-				Rental.unlock_app(device.name)
-			end
+			Rental.manage_single_app_profile("remove", device.id, {})
 		else
 			Rental.stop_existing_rentals(device)
-			if air_watch_devices.include?(params["ipad_name"])
-				Rental.manage_single_app_profile("install", device.id, {})
-			else
-				Rental.lock_app(device.name)
-			end
+			Rental.manage_single_app_profile("install", device.id, {})
 		end
 		unless params["origin"] == "finish_rental"
 			AdminAccess.create(
@@ -262,7 +247,6 @@ class RentalsController < ApplicationController
 	end
 
 	def install_apps
-		Rental.install_apps(params["ipad_name"])
 		render :json => { :message => "success" }
 	end
 end

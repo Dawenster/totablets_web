@@ -21,55 +21,6 @@ class Rental < ActiveRecord::Base
 		    f.password = ENV['MERAKI_PASSWORD']
 		  end.click_button
 
-			# headers = {
-			# 	"Accept" => "*/*",
-			# 	"Accept-Encoding" => "gzip,deflate,sdch",
-			# 	"Accept-Language" => "en-US,en;q=0.8",
-			# 	"Cache-Control" => "no-cache",
-			# 	"Connection" => "keep-alive",
-			# 	"Content-Length" => "61",
-			# 	"Content-Type" => "application/x-www-form-urlencoded",
-			# 	"Cookie" => "Cookie:__cfduid=d633538b4ad746e8c35b889a46ba9cb1e1373738581; registered=true; dash_auth=MOKTz0VWuWTwwjeCsosumevmZ1ZczNtTBiQo_HhtsGtfnmUmyJx17csAvm21FhoLXd7kprH_cpL49r52-uPlpfhtuId1V-2DAYRu6ysnW7KSW9NwgDA3K46IKOx1o38ZbxM0hNTbC-NUJIC0HyQB-xjZW8; BAYEUX_BROWSER=d72117eov5hn3naq4hlrddpo816ht; __utma=249374488.1268959068.1373740322.1379872680.1379885871.80; __utmb=249374488.9.10.1379885871; __utmc=249374488; __utmz=249374488.1379558262.68.22.utmcsr=account.meraki.com|utmccn=(referral)|utmcmd=referral|utmcct=/secure/login/dashboard_login; _session_id=71f021a5c26e05eaec20ea9e75bb45f9",
-			# 	"Host" => "n38.meraki.com",
-			# 	"Origin" => "https://n38.meraki.com",
-			# 	"Pragma" => "no-cache",
-			# 	"Referer" => "https://n38.meraki.com/Systems-Manager/n/xkWsDaM/manage/configure/apps",
-			# 	"User-Agent" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.76 Safari/537.36",
-			# 	"X-CSRF-Token" => "825sHfjZIzDE4T7hm75kUifOm8yzTudPg8u/+5v8Jp0=",
-			# 	"X-Requested-With" => "XMLHttpRequest"
-			# }
-
-			# gmail_app_id = "584342051651326340"
-			# facebook_app_id = "584342051651324334"
-			# twitter_app_id = "584342051651326341"
-			# skype_app_id = "584342051651324335"
-
-			# delete_app_post_path = "https://n38.meraki.com/Systems-Manager/n/xkWsDaM/manage/configure/pcc_uninstall_app_from_clients"
-
-			# # App refresh
-			# a.post("https://n38.meraki.com/Systems-Manager/n/xkWsDaM/manage/pcc/update_app_list/#{device.meraki_client_id}", {}, headers)
-
-			# sleep(10)
-
-			# # Delete Gmail app
-			# a.post(delete_app_post_path, { "client_ids[]" => device.meraki_client_id, "app_id" => gmail_app_id }, headers)
-			# sleep(1)
-
-			# # Delete Facebook app
-			# a.post(delete_app_post_path, { "client_ids[]" => device.meraki_client_id, "app_id" => facebook_app_id }, headers)
-			# sleep(1)
-
-			# # Delete Twitter app
-			# a.post(delete_app_post_path, { "client_ids[]" => device.meraki_client_id, "app_id" => twitter_app_id }, headers)
-			# sleep(1)
-
-			# # Delete Skype app
-			# a.post(delete_app_post_path, { "client_ids[]" => device.meraki_client_id, "app_id" => skype_app_id }, headers)
-			# sleep(1)
-
-			# # Client check in
-			# a.post("https://n38.meraki.com/Systems-Manager/n/xkWsDaM/manage/pcc/mdm_notify_now/#{device.meraki_client_id}", {}, headers)
-
 			# Lock device
 			a.get("https://n38.meraki.com/Systems-Manager/n/xkWsDaM/manage/configure/pcc_ios") do |settings_page|
 			  settings_page.form_with(:action => '/Systems-Manager/n/xkWsDaM/manage/configure/update_pcc_ios') do |form|
@@ -124,68 +75,6 @@ class Rental < ActiveRecord::Base
 				end
 			end
 		end
-	end
-
-	def self.install_apps(device_name)
-		# device = Device.find_by_name(device_name)
-
-		# a = Mechanize.new
-		# a.get('https://account.meraki.com/secure/login/dashboard_login') do |page|
-
-		#   my_page = page.form_with(:action => 'https://account.meraki.com/login/login') do |f|
-		#     f.email = ENV['MERAKI_EMAIL']
-		#     f.password = ENV['MERAKI_PASSWORD']
-		#   end.click_button
-
-		# 	headers = {
-		# 		"Accept" => "*/*",
-		# 		"Accept-Encoding" => "gzip,deflate,sdch",
-		# 		"Accept-Language" => "en-US,en;q=0.8",
-		# 		"Cache-Control" => "no-cache",
-		# 		"Connection" => "keep-alive",
-		# 		# "Content-Length" => "1193",
-		# 		"Content-Type" => "application/x-www-form-urlencoded",
-		# 		"Cookie" => "__cfduid=d633538b4ad746e8c35b889a46ba9cb1e1373738581; BAYEUX_BROWSER=d72117eov5hn3naq4hlrddpo816ht; registered=true; dash_auth=MOzl3Y4kWtzZkIXz7R2byb4IJcIAa-ozVtm2_90R4WGkepXLqTkEed881mDVMuqNJ5XVm9zDuR-KCu7xD680ViTHDesodJUZC9HGnn4Vf8wHa2OXu-7n0YuyoIYQLyazAcKkAufJ2wufwRuq9YKFpbqmdE; __utma=249374488.1268959068.1373740322.1379993518.1380086560.84; __utmb=249374488.18.10.1380086560; __utmc=249374488; __utmz=249374488.1380086560.84.24.utmcsr=account.meraki.com|utmccn=(referral)|utmcmd=referral|utmcct=/secure/login/dashboard_login; _session_id=16ec8fd95f0ce66dd704e15c3be56e9a",
-		# 		"Host" => "n38.meraki.com",
-		# 		"Origin" => "https://n38.meraki.com",
-		# 		"Pragma" => "no-cache",
-		# 		"Referer" => "https://n38.meraki.com/Systems-Manager/n/xkWsDaM/manage/configure/apps",
-		# 		"User-Agent" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.76 Safari/537.36",
-		# 		"X-CSRF-Token" => "TBrsR/jV2qo3yCmBBEz6BQXFNCSqCanhOwE4DKVF0OM=",
-		# 		"X-Requested-With" => "XMLHttpRequest"
-		# 	}
-
-		# 	gmail_app_id = "584342051651326340"
-		# 	facebook_app_id = "584342051651324334"
-		# 	twitter_app_id = "584342051651326341"
-		# 	skype_app_id = "584342051651324335"
-
-		# 	install_app_post_path = "https://n38.meraki.com/Systems-Manager/n/xkWsDaM/manage/pcc/install_managed_app/#{device.meraki_client_id}"
-
-		# 	# App refresh
-		# 	a.post("https://n38.meraki.com/Systems-Manager/n/xkWsDaM/manage/pcc/update_app_list/#{device.meraki_client_id}", {}, headers)
-
-		# 	# Installing Gmail
-		# 	a.post("#{install_app_post_path}?app=#{gmail_app_id}", { "app" => gmail_app_id }, headers)
-
-		# 	# Client check in
-		# 	a.post("https://n38.meraki.com/Systems-Manager/n/xkWsDaM/manage/pcc/mdm_notify_now/#{device.meraki_client_id}", {}, headers)
-
-		# 	# Installing Facebook
-		# 	a.post("#{install_app_post_path}?app=#{facebook_app_id}", { "app" => facebook_app_id }, headers)
-
-		# 	# Client check in
-		# 	a.post("https://n38.meraki.com/Systems-Manager/n/xkWsDaM/manage/pcc/mdm_notify_now/#{device.meraki_client_id}", {}, headers)
-
-		# 	# Installing Twitter
-		# 	a.post("#{install_app_post_path}?app=#{twitter_app_id}", { "app" => twitter_app_id }, headers)
-
-		# 	# Client check in
-		# 	a.post("https://n38.meraki.com/Systems-Manager/n/xkWsDaM/manage/pcc/mdm_notify_now/#{device.meraki_client_id}", {}, headers)
-
-		# 	# Installing Skype
-		# 	a.post("#{install_app_post_path}?app=#{skype_app_id}", { "app" => skype_app_id }, headers)
-		# end
 	end
 
 	def self.manage_single_app_profile(command, device_id, opts)
