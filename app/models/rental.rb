@@ -84,7 +84,8 @@ class Rental < ActiveRecord::Base
 			  <Udid>#{device.udid}</Udid>
 			</DeviceInfo>
 		eos
-		auth = "Basic ZGF2aWRAdG90YWJsZXRzLmNvbTpBc2RmMTIzNA=="
+		# auth = "Basic ZGF2aWRAdG90YWJsZXRzLmNvbTpBc2RmMTIzNA=="
+		auth = "Basic ZGF2aWRAdG90YWJsZXRzLmNvbTpBU2RmMTIzNA=="
 		header = { :content_type => :xml, "aw-tenant-code" => "1LSVS4BQAAG5A4TQCFQA", :authorization => auth, :accept => :xml }
 
 		# Order matters when installing / uninstalling apps
