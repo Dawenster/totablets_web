@@ -19,3 +19,4 @@
 
 # HTTPS Certs
 /certs
+*.dump
