@@ -85,7 +85,7 @@ class Rental < ActiveRecord::Base
 			</DeviceInfo>
 		eos
 		# auth = "Basic ZGF2aWRAdG90YWJsZXRzLmNvbTpBc2RmMTIzNA=="
-		auth = "Basic ZGF2aWRAdG90YWJsZXRzLmNvbTpBU2RmMTIzNA=="
+		auth = "Basic ZGF2aWRAdG90YWJsZXRzLmNvbTpXYWhvd2UxMDAh"
 		header = { :content_type => :xml, "aw-tenant-code" => "1LSVS4BQAAG5A4TQCFQA", :authorization => auth, :accept => :xml }
 
 		# Order matters when installing / uninstalling apps
