@@ -66,7 +66,7 @@ Totablets::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   # Force SSL in production
-  config.force_ssl = true
+  config.force_ssl = false
 
   # Email settings
   config.action_mailer.delivery_method = :smtp
