@@ -64,7 +64,7 @@ module Totablets
 
     config.assets.initialize_on_precompile = false
 
-    config.action_mailer.default_url_options = { host: 'totablets.com', protocol: 'https://www.' } if Rails.env.production?
+    config.action_mailer.default_url_options = { host: 'totablets.com', protocol: 'http://www.' } if Rails.env.production?
     config.action_mailer.default_url_options = { host: 'localhost:3000' } if Rails.env.development?
     config.action_mailer.default_url_options = { host: 'localhost:3000' } if Rails.env.test?
   end
